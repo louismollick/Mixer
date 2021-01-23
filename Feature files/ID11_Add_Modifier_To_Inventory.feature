@@ -1,3 +1,4 @@
+# Author - Sami
 Feature: Add Modifier To Inventory
 
 As a user of Mixer
