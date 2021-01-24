@@ -14,13 +14,13 @@ Background: User is logged in and has items in inventory
 Scenario: Remove a valid alcohol type from inventory (Success Flow)
 
     When I select an alcohol type
-    And the alcohol type is in my inventory
-    And I confirm removing it from my inventory
+    And the alcohol type exists in inventory
+    And I confirm removing it from inventory
     Then the system will remove the alcohol type from my inventory
 
 Scenario: Alcohol type does not exist in inventory (Error Case)
 
     When I select an alcohol type
-    And the alcohol type is not in my inventory
+    And the alcohol type does not exist in inventory
     Then the system will display an error
     And no item will be removed
