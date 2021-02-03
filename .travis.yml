@@ -1,3 +1,9 @@
 language: java
+install: skip
+
+os: linux
+dist: trusty
+jdk: oraclejdk15
+
 script:
-- gradle build
+  - ./gradlew build --scan -s -xtest
