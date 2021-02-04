@@ -6,4 +6,4 @@ dist: trusty
 jdk: oraclejdk15
 
 script:
-  - ./gradlew build -s -xtest
+  - ./gradlew build -s
