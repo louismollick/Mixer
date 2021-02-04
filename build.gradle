@@ -28,5 +28,5 @@ test {
 }
 
 task stage () {
-    dependsOn ':Mixer-Backend:assemble'
+    dependsOn ':Mixer:assemble'
 }
