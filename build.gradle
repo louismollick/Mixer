@@ -26,3 +26,7 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task stage () {
+    dependsOn ':Mixer-Backend:assemble'
+}
