@@ -3,7 +3,7 @@ package com.ecse428.project.controller;
 import java.util.List;
 
 import com.ecse428.project.model.Modifier;
-import com.ecse428.project.service.ModifierService;
+import com.ecse428.project.service.IModifierService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "api/modifier")
 public class ModifierController {
-  private final ModifierService modifierService;
+  private final IModifierService modifierService;
 
   @Autowired
-  public ModifierController(ModifierService modifierService) {
+  public ModifierController(IModifierService modifierService) {
     this.modifierService = modifierService;
   }
 

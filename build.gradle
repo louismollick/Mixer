@@ -19,10 +19,18 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.cucumber:cucumber-java:6.8.1'
   testImplementation 'io.cucumber:cucumber-junit:6.8.1'
+	testImplementation 'io.cucumber:cucumber-spring:6.9.1'
+	testImplementation 'com.h2database:h2'
 }
 
 test {
-	useJUnitPlatform()
+	filter {
+    includeTestsMatching "*UnitTest"
+		//includeTestsMatching "Ecse428ProjectCucumberTestsRunner"
+  }
+	testLogging {
+    events "passed", "skipped", "failed"
+  }
 }
 
 task stage(dependsOn: ['build', 'clean'])
