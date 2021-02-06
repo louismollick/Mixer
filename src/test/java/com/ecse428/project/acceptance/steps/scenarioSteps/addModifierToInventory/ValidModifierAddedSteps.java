@@ -46,7 +46,8 @@ public class ValidModifierAddedSteps {
 
   @Then("the system will add the modifier to my inventory")
   public void the_system_will_add_the_modifier_to_my_inventory() {
-    // Assert that the modifier is in the user's inventory either using the UserRepository
+    // Assert that the modifier is in the user's inventory either using the
+    // UserRepository
     // or by querying it with the restTemplate
     throw new io.cucumber.java.PendingException();
   }
