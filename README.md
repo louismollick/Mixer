@@ -28,7 +28,7 @@ There's two ways of installing/using Postgres in your local dev environment:
 
 4. Input into psql prompt:  `CREATE DATABASE ecse428;`
 
-5. `GRANT ALL PRIVILEGES ON "ecse428" TO postgres;`
+5. `GRANT ALL PRIVILEGES ON DATABASE "ecse428" TO postgres;`
 
 6. Run the Spring backend, it should connect!
 
