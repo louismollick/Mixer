@@ -10,9 +10,9 @@ There's two ways of installing/using Postgres in your local dev environment:
  Then open the Desktop app interface, click "Start".
  * Windows: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads  
 
- 2. Open Terminal on Mac or 'psql' command line application on Windows (that was just installed, should be in Start).
-
- 3. Input: `psql -h localhost -p 5432 -U postgres`
+ 2. Open psql prompt:
+ * Mac: Open Terminal and input `psql -h localhost -p 5432 -U postgres` 
+ * Windows: 'psql' command line application on Windows (Windows instructions: https://youtu.be/BLH3s5eTL4Y?t=392).
 
 ### Docker container
   1. Download Docker: 
