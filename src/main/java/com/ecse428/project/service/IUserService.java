@@ -1,6 +1,5 @@
 package com.ecse428.project.service;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,7 +23,8 @@ public class IUserService implements UserService {
     private final AlcoholRepository alcoholRepository;
 
     @Autowired
-    public IUserService(UserRepository userRepository, ModifierRepository modifierRepository, AlcoholRepository alcoholRepository) {
+    public IUserService(UserRepository userRepository, ModifierRepository modifierRepository,
+            AlcoholRepository alcoholRepository) {
         this.userRepository = userRepository;
         this.modifierRepository = modifierRepository;
         this.alcoholRepository = alcoholRepository;
@@ -32,30 +32,30 @@ public class IUserService implements UserService {
 
     @Override
     public Set<Modifier> getModifiersInInventory(long userId) {
-        // TODO
-        // Find user
-        // Return modifiersInInventory
-        return null;
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+        return user.get().getModifiersInInventory();
     }
 
     @Override
     public void putModifierInInventory(long userId, String modifierName) {
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
-        if (!user.isPresent()){
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
         }
         // Find modifier in database
         Optional<Modifier> modifier = modifierRepository.findByName(modifierName);
-        if (!modifier.isPresent()){
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Modifier not found with name " + modifierName + ".");
+        if (!modifier.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Modifier not found with name " + modifierName + ".");
         }
 
         // Add modifier to user's modifiersInInventory
         user.get().getModifiersInInventory().add(modifier.get());
-        
+
         // Save user
         userRepository.save(user.get());
     }

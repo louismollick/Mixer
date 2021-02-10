@@ -1,6 +1,7 @@
 package com.ecse428.project.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -87,6 +88,24 @@ public class User {
   public String toString() {
     return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", alcoholInInventory='"
         + getAlcoholInInventory() + "'" + ", modifiersInInventory='" + getModifiersInInventory() + "'" + "}";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof User)) {
+      return false;
+    }
+    User user = (User) o;
+    return Objects.equals(id, user.id) && Objects.equals(username, user.username)
+        && Objects.equals(alcoholInInventory, user.alcoholInInventory)
+        && Objects.equals(modifiersInInventory, user.modifiersInInventory);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, username, alcoholInInventory, modifiersInInventory);
   }
 
 }

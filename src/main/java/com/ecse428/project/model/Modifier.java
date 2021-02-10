@@ -1,5 +1,7 @@
 package com.ecse428.project.model;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +15,7 @@ public class Modifier {
   }
 
   @Id
-  @Column( name = "modifier_name")
+  @Column(name = "modifier_name")
   private String name;
   private ModifierType type;
 
@@ -36,6 +38,22 @@ public class Modifier {
   @Override
   public String toString() {
     return "{" + " name='" + getName() + "'" + ", type='" + getType() + "'" + "}";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Modifier)) {
+      return false;
+    }
+    Modifier modifier = (Modifier) o;
+    return Objects.equals(name, modifier.name) && Objects.equals(type, modifier.type);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, type);
   }
 
 }
