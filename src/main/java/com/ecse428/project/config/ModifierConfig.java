@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ModifierConfig {
 
   @Bean
-  CommandLineRunner commandLineRunner(ModifierRepository modifierRepository){
+  CommandLineRunner modifierCommandLineRunner(ModifierRepository modifierRepository){
     return args -> {
       Modifier sugarSyrup = new Modifier("Sugar Syrup", ModifierType.SYRUP);
       Modifier limeJuice = new Modifier("Lime Juice", ModifierType.JUICE);

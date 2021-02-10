@@ -15,6 +15,7 @@ public class IAlcoholService implements AlcoholService {
         this.alcoholRepository = alcoholRepository;
     }
 
+    @Override
     public List<Alcohol> getAlcohol(){
         return alcoholRepository.findAll();
     }

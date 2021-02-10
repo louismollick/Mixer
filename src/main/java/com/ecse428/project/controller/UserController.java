@@ -6,41 +6,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Set;
+
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Modifier;
+import com.ecse428.project.service.UserService;
+
 
 @RestController
 @RequestMapping(path = "api/user/{userId}")
 public class UserController {
-  // TODO Import UserService, write REST endpoints 
-  // for adding modifiers & alcohols 
-  // TO INVENTORY using UserService methods
 
-  @Autowired
-  private final UserService userService;
+	  @Autowired
+	  private final UserService userService;
 
-  public UserController (UserService userService){
-    this.userService = userService;
-  }
+	  public UserController (UserService userService){
+	    this.userService = userService;
+	  }
+	  
+	  @GetMapping("modifier")
+	  public Set<Modifier> getModifiersInInventory(@PathVariable int userId){
+	    return userService.getModifiersInInventory(userId);
+	  }
+	  
+	  @PutMapping("modifier/{modifierName}")
+	  public void putModifierInInventory(@PathVariable int userId, @PathVariable String modifierName){
+	    userService.putModifierInInventory(userId, modifierName);
+	  }
 
-
-  @GetMapping("alcohol")
-  public Alcohol getAlcoholInInventory(@PathVariable int userId){
-    return userService.getAlcoholInInventory(userId);
-  }
-  
-  @PutMapping("alcohol/{alcoholName}")
-  public void addAlcoholToInventory(@PathVariable int userId, @PathVariable String alcoholName){
-    return userService.putAlcoholInInventory(userId, alcoholName);
-  }
-
-
-  //vodka
-  //gin
-  //whiskey
-  //tequila
-  //rum
-  //scotch
-  //brandy
-  //bourbon
-
+    @GetMapping("alcohol")
+    public Set<Alcohol> getAlcoholInInventory(@PathVariable int userId){
+      return userService.getAlcoholInInventory(userId);
+    }
+    
+    @PutMapping("alcohol/{alcoholName}")
+    public void putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName){
+      userService.putAlcoholInInventory(userId, alcoholName);
+    }
 }
