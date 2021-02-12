@@ -1,11 +1,9 @@
 package com.ecse428.project.model;
 
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -47,4 +45,6 @@ public class Alcohol {
         return Objects.hashCode(name);
     }
 
+    @ManyToMany(mappedBy = "alcohols")
+    private List<Cocktail> cocktails;
 }

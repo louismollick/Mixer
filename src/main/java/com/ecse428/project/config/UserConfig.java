@@ -11,16 +11,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UserConfig {    
-    
+
   @Bean
   CommandLineRunner userCommandLineRunner(UserRepository userRepository){
     return args -> {
       User john = new User("JohnDoe9");
 
-      userRepository.saveAll(
-        List.of(john)
-      );
+      userRepository.saveAll(List.of(john));
     };
   }
-
 }
