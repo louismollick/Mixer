@@ -1,11 +1,9 @@
 package com.ecse428.project.model;
 
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -26,6 +24,9 @@ public class Modifier {
     this.name = name;
     this.type = type;
   }
+
+  @ManyToMany(mappedBy = "modifiers")
+  private List<Cocktail> cocktails;
 
   public String getName() {
     return this.name;
