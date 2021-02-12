@@ -1,9 +1,11 @@
 language: java
 install: skip
-
 os: linux
 dist: trusty
 jdk: oraclejdk15
-
 script:
-  - ./gradlew build -s
+- "./gradlew build -s"
+deploy:
+  api_key:
+    secure: F8EnYuqLINEX/nClYZ1emG/yBLAAxiDzXBaGsjvQVd5lw6xkcj+50HLaCT2Y6y4HR1DdfqYDY5fiZ58kv1cmC3GMa27I7dkvvgLi3MYU7scaXDwx0VWbTaQL0RJtQOC/BQxJT0gGOoUQZXl7MssPnpMaqZkOIxh1JFHm43GDU1plhjalZwsPISxzm6iPywWCt7VJPq2nms2edE3/rZamWVJgkcm51vCxqx9FANIhqo3c+7YgnCJUOW67z2LBB9B+5NKtAMDe8zjzK9zDOnn2WZ5nZR2Dp9C6FOTiiyO38IfXMWI75nmML0Sch8UpeIaF1YZOzn5YQrv8S7idLHLO16HMsOoWyHJ8xl0CJZvvNRJm8UCDUs6VeXQELlgugjeVimpFBHciRydXvORVdryyk2hVlR8ESyrgbAkYfmm86EGlk6IcWqoJl6krmMaf5+TIBVK6Nxrj59hsKC1FJ1KsAVj+7QWg+n3yDSUdfXZmcby3RhVn03nHLR32uGQPcwICORSubYs8Im/j/T80VwX7GP0nisaHw1xu404wpWJAhuZuZ2sv4kBjdYjap/4HntGVPAz549JkGs8+dVxtzk7fw2MsHJ32B9JRPGZ2Y3NHAHQyBVsJyOvynOspsVU8EKVz+DA8yY2ZAQHf6guMV8QCye9G2KUnssgp9fZgudib5bo=
+  app: mixer-backend1234
