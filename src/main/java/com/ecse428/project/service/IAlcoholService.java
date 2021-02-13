@@ -7,12 +7,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IAlcoholService implements AlcoholService {
-    
-    private final AlcoholRepository alcoholRepository;
+
+    @Autowired
+    private AlcoholRepository alcoholRepository;
 
     @Autowired
     public IAlcoholService(AlcoholRepository alcoholRepository){
         this.alcoholRepository = alcoholRepository;
+    }
+
+    public IAlcoholService() {
+
     }
 
     @Override

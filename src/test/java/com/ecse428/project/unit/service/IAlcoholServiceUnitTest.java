@@ -4,10 +4,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier;
-import com.ecse428.project.repository.ModifierRepository;
-import com.ecse428.project.service.IModifierService;
-import com.ecse428.project.service.ModifierService;
+import com.ecse428.project.repository.AlcoholRepository;
+import com.ecse428.project.service.AlcoholService;
+import com.ecse428.project.service.IAlcoholService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,38 +24,38 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-public class IModifierServiceUnitTest {
+public class IAlcoholServiceUnitTest {
 
     @TestConfiguration
-    static class IModifierServiceTestContextConfiguration {
+    static class IAlcoholServiceTestContextConfiguration {
 
         @Bean
-        public ModifierService modifierService() {
-            return new IModifierService();
+        public AlcoholService alcoholService() {
+            return new IAlcoholService();
         }
     }
 
     @Autowired
-    private IModifierService modifierService;
+    private IAlcoholService alcoholService;
 
     @MockBean
-    private ModifierRepository modifierRepository;
+    private AlcoholRepository alcoholRepository;
 
     @Before
     public void setUp() {
-        Modifier coke = new Modifier("Cococola", Modifier.ModifierType.SMOOTHING_AGENT);
+        Alcohol vodka = new Alcohol("Vodka");
 
-        when(modifierRepository.findAll()).thenReturn(Arrays.asList(coke));
+        when(alcoholRepository.findAll()).thenReturn(Arrays.asList(vodka));
     }
 
     @Test
     public void whenValidName_thenAlcoholShouldBeFound() {
-        String name = "Cococola";
-        List<Modifier> modifierList = modifierService.getModifiers();
+        String name = "Vodka";
+        List<Alcohol> alcoholList = alcoholService.getAlcohol();
         boolean found = false;
 
-        for (Modifier m : modifierList) {
-            if (m.getName().equals(name)) {
+        for (Alcohol a : alcoholList) {
+            if (a.getName().equals(name)) {
                 found = true;
                 break;
             }
@@ -64,12 +66,12 @@ public class IModifierServiceUnitTest {
 
     @Test
     public void whenInValidName_thenAlcoholShouldBeFound() {
-        String name = "Coke";
-        List<Modifier> modifierList = modifierService.getModifiers();
+        String name = "Rum";
+        List<Alcohol> alcoholList = alcoholService.getAlcohol();
         boolean found = false;
 
-        for (Modifier m : modifierList) {
-            if (m.getName().equals(name)) {
+        for (Alcohol a : alcoholList) {
+            if (a.getName().equals(name)) {
                 found = true;
                 break;
             }
