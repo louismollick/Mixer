@@ -62,19 +62,33 @@ public class IUserService implements UserService {
 
     @Override
     public Set<Alcohol> getAlcoholInInventory(long userId) {
-        // TODO
         // Find user
-        // Return modifiersInInventory
-        return null;
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+        // Return alcoholInInventory
+        return user.get().getAlcoholInInventory();
     }
 
     @Override
     public void putAlcoholInInventory(long userId, String alcoholName) {
-        // TODO
         // Find user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
         // Find alcohol in database
         // Error if either doesn't exist
+        Optional<Alcohol> alcohol = alcoholRepository.findByName(alcoholName);
+        if (!alcohol.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Alcohol not found with name " + alcoholName + ".");
+        }
+
         // Else add alcohol to user's alcoholInInventory
+        user.get().getAlcoholInInventory().add(alcohol.get());
+        
         // Save user
+        userRepository.save(user.get());
     }
 }
