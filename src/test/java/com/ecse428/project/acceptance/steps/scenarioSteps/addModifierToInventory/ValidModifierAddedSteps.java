@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ecse428.project.acceptance.CucumberConfig;
 import com.ecse428.project.acceptance.steps.commonSteps.UserLoggedInSteps;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
@@ -22,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ValidModifierAddedSteps {
+public class ValidModifierAddedSteps extends CucumberConfig {
 
   @Autowired
   TestRestTemplate restTemplate;

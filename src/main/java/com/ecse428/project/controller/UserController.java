@@ -18,30 +18,30 @@ import com.ecse428.project.service.UserService;
 @RequestMapping(path = "api/user/{userId}")
 public class UserController {
 
-	  @Autowired
-	  private final UserService userService;
+    @Autowired
+    private final UserService userService;
 
-	  public UserController (UserService userService){
-	    this.userService = userService;
-	  }
-	  
-	  @GetMapping("modifier")
-	  public Set<Modifier> getModifiersInInventory(@PathVariable int userId){
-	    return userService.getModifiersInInventory(userId);
-	  }
-	  
-	  @PutMapping("modifier/{modifierName}")
-	  public void putModifierInInventory(@PathVariable int userId, @PathVariable String modifierName){
-	    userService.putModifierInInventory(userId, modifierName);
-	  }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("modifier")
+    public Set<Modifier> getModifiersInInventory(@PathVariable int userId) {
+        return userService.getModifiersInInventory(userId);
+    }
+
+    @PutMapping("modifier/{modifierName}")
+    public void putModifierInInventory(@PathVariable int userId, @PathVariable String modifierName) {
+        userService.putModifierInInventory(userId, modifierName);
+    }
 
     @GetMapping("alcohol")
-    public Set<Alcohol> getAlcoholInInventory(@PathVariable int userId){
-      return userService.getAlcoholInInventory(userId);
+    public Set<Alcohol> getAlcoholInInventory(@PathVariable int userId) {
+        return userService.getAlcoholInInventory(userId);
     }
-    
+
     @PutMapping("alcohol/{alcoholName}")
-    public void putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName){
-      userService.putAlcoholInInventory(userId, alcoholName);
+    public void putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName) {
+        userService.putAlcoholInInventory(userId, alcoholName);
     }
 }

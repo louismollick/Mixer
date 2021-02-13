@@ -1,4 +1,5 @@
 package com.ecse428.project.config;
+
 import java.util.List;
 
 import com.ecse428.project.model.User;
@@ -8,16 +9,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
-public class UserConfig {    
+public class UserConfig {
 
-  @Bean
-  CommandLineRunner userCommandLineRunner(UserRepository userRepository){
-    return args -> {
-      User john = new User("JohnDoe9");
+    @Bean
+    CommandLineRunner userCommandLineRunner(UserRepository userRepository) {
+        return args -> {
+            User john = new User("JohnDoe9");
 
-      userRepository.saveAll(List.of(john));
-    };
-  }
+            userRepository.saveAll(List.of(john));
+        };
+    }
 }
