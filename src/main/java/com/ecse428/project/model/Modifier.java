@@ -20,6 +20,10 @@ public class Modifier {
   public Modifier() {
   }
 
+  public Modifier(String name) {
+    this.name = name;
+  }
+
   public Modifier(String name, ModifierType type) {
     this.name = name;
     this.type = type;
