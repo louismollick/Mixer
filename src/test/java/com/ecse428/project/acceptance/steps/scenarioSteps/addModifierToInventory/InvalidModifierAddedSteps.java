@@ -29,25 +29,22 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
 
   @Autowired
   TestRestTemplate restTemplate;
-  private IUserService service;
 
   @Autowired
   UserRepository userRepository;
 
-  ResponseEntity<Void> response;
+  private ResponseEntity<Void> response;
+  private String invalid_name = "Invalid Modifier";
   private Modifier chosen;
   private User user;
-  String errorMessage = "";
 
-  @When("I select a modifier")
+  @When("I select an invalid modifier")
   public void i_select_a_modifier() {
     // Get the user
     user = userRepository.findByUsername(UserLoggedInSteps.userName).get();
     // Creating invalid modifier
-    chosen = new Modifier("Invalid Modifier");
+    chosen = new Modifier(invalid_name);
     assertNotNull(chosen);
-    // Should probably assert a known modifier
-    System.out.println(chosen);
   }
 
   @When("I confirm adding it to my inventory")
@@ -58,33 +55,28 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
     params.put("userId", user.getId().toString());
     params.put("modifierName", chosen.getName());
 
-    ResponseEntity<Void> response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
-  
-    //assertEquals(HttpStatus.OK, response.getStatusCode());
+    response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
   }
 
   @Then("the system will notify me that the modifier is invalid")
   public void the_system_will_notify_me_that_the_modifier_is_invalid() {
-    //Not sure how to confirm the modifier is invalid
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    //assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
+    // assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
     System.out.println("The input modifier is invalid");
   }
 
   @Then("the modifier will not be in my inventory")
   public void the_modifier_will_not_be_in_my_inventory() {
-    //service.putModifierInInventory(user.getId().toString(), chosen)
+    // service.putModifierInInventory(user.getId().toString(), chosen)
     final String uri_req = "/api/user/{userId}/modifier/";
     Map<String, String> params = new HashMap<String, String>();
     params.put("userId", user.getId().toString());
 
-    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class, params);
+    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class,
+        params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertFalse(Arrays.asList(response.getBody()).contains(chosen));
 
-
-
-
-}
+  }
 
 }
