@@ -6,3 +6,4 @@ bin
 .project
 build/
 .DS_STORE
+application-default.properties
