@@ -47,11 +47,17 @@ public class IUserService implements UserService {
         if (!user.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
         }
+
         // Find modifier in database
         Optional<Modifier> modifier = modifierRepository.findByName(modifierName);
         if (!modifier.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Modifier not found with name " + modifierName + ".");
+        }
+
+        // Let the user know if it's already in their inventory
+        if (user.get().getModifiersInInventory().contains(modifier.get())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Modifier already in inventory.");
         }
 
         // Add modifier to user's modifiersInInventory
@@ -82,11 +88,14 @@ public class IUserService implements UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
         }
         // Find alcohol in database
-        // Error if either doesn't exist
         Optional<Alcohol> alcohol = alcoholRepository.findByName(alcoholName);
         if (!alcohol.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Alcohol not found with name " + alcoholName + ".");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Alcohol not found with name " + alcoholName + ".");
+        }
+
+        // Let the user know if it's already in their inventory
+        if (user.get().getAlcoholInInventory().contains(alcohol.get())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Alcohol already in inventory.");
         }
 
         // Else add alcohol to user's alcoholInInventory

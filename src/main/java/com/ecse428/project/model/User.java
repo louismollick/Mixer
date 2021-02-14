@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,11 +30,11 @@ public class User {
     @Column(unique=true)
     private String username;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_alcohols", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "alcohol_name"))
     private Set<Alcohol> alcoholInInventory;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_modifiers", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "modifier_name"))
     private Set<Modifier> modifiersInInventory;
 
@@ -77,6 +78,10 @@ public class User {
         this.alcoholInInventory = alcoholInInventory;
     }
 
+    public void addAlcoholToInventory(Alcohol chosenAlcohol) {
+        this.alcoholInInventory.add(chosenAlcohol);
+	}
+
     public Set<Modifier> getModifiersInInventory() {
         return this.modifiersInInventory;
     }
@@ -84,6 +89,10 @@ public class User {
     public void setModifiersInInventory(Set<Modifier> modifiersInInventory) {
         this.modifiersInInventory = modifiersInInventory;
     }
+
+    public void addModifierToInventory(Modifier chosenModifier) {
+        this.modifiersInInventory.add(chosenModifier);
+	}
 
     @Override
     public String toString() {
