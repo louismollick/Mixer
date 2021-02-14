@@ -1,5 +1,6 @@
 package com.ecse428.project.acceptance;
 
+import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
 
@@ -12,10 +13,12 @@ import io.cucumber.spring.ScenarioScope;
 @ScenarioScope
 public class TestContext {
 
-  public static String invalid_name = "Invalid Modifier";
+  public static String invalid_name = "Invalid Name";
   private ResponseEntity<String> response;
-  private Modifier chosen;
+  private Modifier chosenModifier;
+  private Alcohol chosenAlcohol;
   private User user;
+
 
   public ResponseEntity<String> getResponse() {
     return this.response;
@@ -25,12 +28,20 @@ public class TestContext {
     this.response = response;
   }
 
-  public Modifier getChosen() {
-    return this.chosen;
+  public Modifier getChosenModifier() {
+    return this.chosenModifier;
   }
 
-  public void setChosen(Modifier chosen) {
-    this.chosen = chosen;
+  public void setChosenModifier(Modifier chosenModifier) {
+    this.chosenModifier = chosenModifier;
+  }
+
+  public Alcohol getChosenAlcohol() {
+    return this.chosenAlcohol;
+  }
+
+  public void setChosenAlcohol(Alcohol alcohol) {
+    this.chosenAlcohol = alcohol;
   }
 
   public User getUser() {

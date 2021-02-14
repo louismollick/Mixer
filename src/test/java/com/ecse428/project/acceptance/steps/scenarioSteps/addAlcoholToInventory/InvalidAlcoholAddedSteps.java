@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.addModifierToInventory;
+package com.ecse428.project.acceptance.steps.scenarioSteps.addAlcoholToInventory;
 
 import com.ecse428.project.acceptance.CucumberConfig;
 import com.ecse428.project.acceptance.TestContext;
@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import com.ecse428.project.model.Modifier;
-import com.ecse428.project.model.Modifier.ModifierType;
+
+import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import org.springframework.http.ResponseEntity;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class InvalidModifierAddedSteps extends CucumberConfig {
+public class InvalidAlcoholAddedSteps extends CucumberConfig {
 
   @Autowired
   private TestContext context;
@@ -35,32 +35,31 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
   @Autowired
   UserRepository userRepository;
 
-  @When("I select an invalid modifier")
-  public void i_select_a_modifier() {
-    // Creating invalid modifier
-    Modifier invaidModifier = new Modifier(TestContext.invalid_name, ModifierType.JUICE);
+  @When("I select an invalid alcohol type")
+  public void i_select_a_alcohol() {
+    Alcohol invaidAlcohol = new Alcohol(TestContext.invalid_name);
 
-    context.setChosenModifier(invaidModifier);
-    assertNotNull(context.getChosenModifier());
+    context.setChosenAlcohol(invaidAlcohol);
+    assertNotNull(context.getChosenAlcohol());
   }
 
-  @Then("the system will notify me that the modifier is invalid")
-  public void the_system_will_notify_me_that_the_modifier_is_invalid() {
+  @Then("the system will notify me that the alcohol type is invalid")
+  public void the_system_will_notify_me_that_the_alcohol_is_invalid() {
     assertEquals(HttpStatus.NOT_FOUND, context.getResponse().getStatusCode());
 
-    assertTrue(context.getResponse().getBody().toString().contains("Modifier not found with name " + TestContext.invalid_name + "."));
+    assertTrue(context.getResponse().getBody().toString().contains("Alcohol not found with name " + TestContext.invalid_name + "."));
   }
 
-  @Then("the modifier will not be in my inventory")
-  public void the_modifier_will_not_be_in_my_inventory() {
-    final String uri_req = "/api/user/{userId}/modifier/";
+  @Then("the new alcohol type will not be in my inventory")
+  public void the_alcohol_will_not_be_in_my_inventory() {
+    final String uri_req = "/api/user/{userId}/alcohol/";
     Map<String, String> params = new HashMap<String, String>();
     params.put("userId", context.getUser().getId().toString());
 
-    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class,
+    ResponseEntity<Alcohol[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Alcohol[].class,
         params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertFalse(Arrays.asList(response.getBody()).contains(context.getChosenModifier()));
+    assertFalse(Arrays.asList(response.getBody()).contains(context.getChosenAlcohol()));
 
   }
 
