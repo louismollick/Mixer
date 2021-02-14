@@ -28,26 +28,21 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
 
   @Autowired
   TestRestTemplate restTemplate;
-  private IUserService service
+  private IUserService service;
 
   @Autowired
   UserRepository userRepository;
 
   private Modifier chosen;
   private User user;
-  String error = "";
+  String errorMessage = "";
 
   @When("I select a modifier")
   public void i_select_a_modifier() {
     // Get the user
     user = userRepository.findByUsername(UserLoggedInSteps.userName).get();
-
-    // Query all modifiers
-    ResponseEntity<Modifier[]> response = restTemplate.getForEntity("/api/modifier", Modifier[].class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-
-    // Select one
-    chosen = response.getBody()[0];
+    // Creating invalid modifier
+    chosen = new Modifier("Invalid Modifier");
     assertNotNull(chosen);
     // Should probably assert a known modifier
     System.out.println(chosen);
@@ -56,18 +51,24 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
   @When("I confirm adding it to my inventory")
   public void i_add_confirm_adding_it_to_my_inventory() {
     // Send request
+    try {
     final String uri_req = "/api/user/{userId}/modifier/{modifierName}";
     Map<String, String> params = new HashMap<String, String>();
     params.put("userId", user.getId().toString());
     params.put("modifierName", chosen.getName());
 
     ResponseEntity<Void> response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    //assertEquals(HttpStatus.OK, response.getStatusCode());
+    } catch (IllegalArgumentException e) {
+        errorMessage = e.getMessage();
+    }
   }
 
   @Then("the system will notify me that the modifier is invalid")
   public void the_system_will_notify_me_that_the_modifier_is_invalid() {
     //Not sure how to confirm the modifier is invalid
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
     System.out.println("The input modifier is invalid");
   }
 
@@ -80,7 +81,6 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
 
     ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class, params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    //Not sure how to confirm modifier not in inventory
     assertFalse(Arrays.asList(response.getBody()).contains(chosen));
 
 
