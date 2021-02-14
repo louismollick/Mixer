@@ -1,6 +1,7 @@
 package com.ecse428.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,8 @@ public class UserController {
     }
 
     @PutMapping("modifier/{modifierName}")
-    public void putModifierInInventory(@PathVariable int userId, @PathVariable String modifierName) {
-        userService.putModifierInInventory(userId, modifierName);
+    public ResponseEntity<String> putModifierInInventory(@PathVariable int userId, @PathVariable String modifierName) {
+        return userService.putModifierInInventory(userId, modifierName);
     }
 
     @GetMapping("alcohol")
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("alcohol/{alcoholName}")
-    public void putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName) {
-        userService.putAlcoholInInventory(userId, alcoholName);
+    public ResponseEntity<String> putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName) {
+        return userService.putAlcoholInInventory(userId, alcoholName);
     }
 }

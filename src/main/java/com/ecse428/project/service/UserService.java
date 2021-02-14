@@ -5,12 +5,14 @@ import java.util.Set;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier;
 
+import org.springframework.http.ResponseEntity;
+
 public interface UserService {
     public Set<Modifier> getModifiersInInventory(long userId);
 
-    public void putModifierInInventory(long userId, String modifierName);
+    public ResponseEntity<String> putModifierInInventory(long userId, String modifierName);
 
     public Set<Alcohol> getAlcoholInInventory(long userId);
 
-    public void putAlcoholInInventory(long userId, String alcoholName);
+    public ResponseEntity<String> putAlcoholInInventory(long userId, String alcoholName);
 }

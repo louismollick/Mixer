@@ -12,6 +12,7 @@ import com.ecse428.project.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,7 +41,7 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public void putModifierInInventory(long userId, String modifierName) {
+    public ResponseEntity<String> putModifierInInventory(long userId, String modifierName) {
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -49,8 +50,8 @@ public class IUserService implements UserService {
         // Find modifier in database
         Optional<Modifier> modifier = modifierRepository.findByName(modifierName);
         if (!modifier.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Modifier not found with name " + modifierName + ".");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Modifier not found with name " + modifierName + ".");
         }
 
         // Add modifier to user's modifiersInInventory
@@ -58,6 +59,8 @@ public class IUserService implements UserService {
 
         // Save user
         userRepository.save(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully added " + modifierName + ".");
     }
 
     @Override
@@ -72,7 +75,7 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public void putAlcoholInInventory(long userId, String alcoholName) {
+    public ResponseEntity<String> putAlcoholInInventory(long userId, String alcoholName) {
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -82,13 +85,16 @@ public class IUserService implements UserService {
         // Error if either doesn't exist
         Optional<Alcohol> alcohol = alcoholRepository.findByName(alcoholName);
         if (!alcohol.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Alcohol not found with name " + alcoholName + ".");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Alcohol not found with name " + alcoholName + ".");
         }
 
         // Else add alcohol to user's alcoholInInventory
         user.get().getAlcoholInInventory().add(alcohol.get());
-        
+
         // Save user
         userRepository.save(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully added " + alcoholName + ".");
     }
 }

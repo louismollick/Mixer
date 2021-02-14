@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ecse428.project.acceptance.CucumberConfig;
+import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.acceptance.steps.commonSteps.UserLoggedInSteps;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
@@ -26,28 +27,23 @@ import io.cucumber.java.en.When;
 public class ValidModifierAddedSteps extends CucumberConfig {
 
   @Autowired
+  private TestContext context;
+
+  @Autowired
   TestRestTemplate restTemplate;
 
   @Autowired
   UserRepository userRepository;
 
-  private Modifier chosen;
-  private User user;
-
-  @When("I select a modifier")
+  @When("I select a valid modifier")
   public void i_select_a_modifier() {
-    // Get the user
-    user = userRepository.findByUsername(UserLoggedInSteps.userName).get();
-
     // Query all modifiers
     ResponseEntity<Modifier[]> response = restTemplate.getForEntity("/api/modifier", Modifier[].class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
     // Select one
-    chosen = response.getBody()[0];
-    assertNotNull(chosen);
-    // Should probably assert a known modifier
-    System.out.println(chosen);
+    context.setChosen(response.getBody()[0]);
+    assertNotNull(context.getChosen());
   }
 
   @When("I confirm adding it to my inventory")
@@ -55,22 +51,23 @@ public class ValidModifierAddedSteps extends CucumberConfig {
     // Send request
     final String uri_req = "/api/user/{userId}/modifier/{modifierName}";
     Map<String, String> params = new HashMap<String, String>();
-    params.put("userId", user.getId().toString());
-    params.put("modifierName", chosen.getName());
+    params.put("userId", context.getUser().getId().toString());
+    params.put("modifierName", context.getChosen().getName());
 
-    ResponseEntity<Void> response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    context.setResponse(restTemplate.exchange(uri_req, HttpMethod.PUT, null, String.class, params));
   }
 
   @Then("the system will add the modifier to my inventory")
   public void the_system_will_add_the_modifier_to_my_inventory() {
+    assertEquals(HttpStatus.OK, context.getResponse().getStatusCode());
     final String uri_req = "/api/user/{userId}/modifier/";
     Map<String, String> params = new HashMap<String, String>();
-    params.put("userId", user.getId().toString());
+    params.put("userId", context.getUser().getId().toString());
 
-    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class, params);
+    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class,
+        params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
-    assertTrue(Arrays.asList(response.getBody()).contains(chosen));
+    assertTrue(Arrays.asList(response.getBody()).contains(context.getChosen()));
   }
 }

@@ -1,6 +1,7 @@
 package com.ecse428.project.acceptance.steps.scenarioSteps.addModifierToInventory;
 
 import com.ecse428.project.acceptance.CucumberConfig;
+import com.ecse428.project.acceptance.TestContext;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,11 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import com.ecse428.project.acceptance.steps.commonSteps.UserLoggedInSteps;
 import com.ecse428.project.model.Modifier;
-import com.ecse428.project.model.User;
+import com.ecse428.project.model.Modifier.ModifierType;
 import com.ecse428.project.repository.UserRepository;
-import com.ecse428.project.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -28,54 +27,40 @@ import io.cucumber.java.en.When;
 public class InvalidModifierAddedSteps extends CucumberConfig {
 
   @Autowired
+  private TestContext context;
+
+  @Autowired
   TestRestTemplate restTemplate;
 
   @Autowired
   UserRepository userRepository;
 
-  private ResponseEntity<Void> response;
-  private String invalid_name = "Invalid Modifier";
-  private Modifier chosen;
-  private User user;
-
   @When("I select an invalid modifier")
   public void i_select_a_modifier() {
-    // Get the user
-    user = userRepository.findByUsername(UserLoggedInSteps.userName).get();
     // Creating invalid modifier
-    chosen = new Modifier(invalid_name);
-    assertNotNull(chosen);
-  }
+    Modifier invaidModifier = new Modifier(TestContext.invalid_name, ModifierType.JUICE);
 
-  @When("I confirm adding it to my inventory")
-  public void i_add_confirm_adding_it_to_my_inventory() {
-    // Send request
-    final String uri_req = "/api/user/{userId}/modifier/{modifierName}";
-    Map<String, String> params = new HashMap<String, String>();
-    params.put("userId", user.getId().toString());
-    params.put("modifierName", chosen.getName());
-
-    response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
+    context.setChosen(invaidModifier);
+    assertNotNull(context.getChosen());
   }
 
   @Then("the system will notify me that the modifier is invalid")
   public void the_system_will_notify_me_that_the_modifier_is_invalid() {
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    // assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
-    System.out.println("The input modifier is invalid");
+    assertEquals(HttpStatus.NOT_FOUND, context.getResponse().getStatusCode());
+
+    assertTrue(context.getResponse().getBody().toString().contains("Modifier not found with name " + TestContext.invalid_name + "."));
   }
 
   @Then("the modifier will not be in my inventory")
   public void the_modifier_will_not_be_in_my_inventory() {
-    // service.putModifierInInventory(user.getId().toString(), chosen)
     final String uri_req = "/api/user/{userId}/modifier/";
     Map<String, String> params = new HashMap<String, String>();
-    params.put("userId", user.getId().toString());
+    params.put("userId", context.getUser().getId().toString());
 
     ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class,
         params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertFalse(Arrays.asList(response.getBody()).contains(chosen));
+    assertFalse(Arrays.asList(response.getBody()).contains(context.getChosen()));
 
   }
 
