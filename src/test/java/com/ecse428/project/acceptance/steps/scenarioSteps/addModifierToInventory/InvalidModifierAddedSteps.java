@@ -5,6 +5,7 @@ import com.ecse428.project.acceptance.CucumberConfig;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
   @Autowired
   UserRepository userRepository;
 
+  ResponseEntity<Void> response;
   private Modifier chosen;
   private User user;
   String errorMessage = "";
@@ -51,24 +53,21 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
   @When("I confirm adding it to my inventory")
   public void i_add_confirm_adding_it_to_my_inventory() {
     // Send request
-    try {
     final String uri_req = "/api/user/{userId}/modifier/{modifierName}";
     Map<String, String> params = new HashMap<String, String>();
     params.put("userId", user.getId().toString());
     params.put("modifierName", chosen.getName());
 
     ResponseEntity<Void> response = restTemplate.exchange(uri_req, HttpMethod.PUT, null, Void.class, params);
+  
     //assertEquals(HttpStatus.OK, response.getStatusCode());
-    } catch (IllegalArgumentException e) {
-        errorMessage = e.getMessage();
-    }
   }
 
   @Then("the system will notify me that the modifier is invalid")
   public void the_system_will_notify_me_that_the_modifier_is_invalid() {
     //Not sure how to confirm the modifier is invalid
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
+    //assertEquals("Modifier not found with name Invalid Modifier.", errorMessage);
     System.out.println("The input modifier is invalid");
   }
 
