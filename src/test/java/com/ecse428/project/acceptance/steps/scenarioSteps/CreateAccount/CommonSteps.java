@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.addModifierToInventory;
+package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
 
 import java.util.HashMap;
 import java.util.Map;
