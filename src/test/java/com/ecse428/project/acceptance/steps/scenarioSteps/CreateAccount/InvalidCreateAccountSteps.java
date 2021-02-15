@@ -41,4 +41,8 @@ public class InvalidCreateAccountSteps extends CucumberConfig {
   public void the_system_will_display_error() {
   }
 
+  @When("the system finds that the email is already in the database")
+  public void the_system_finds_that_the_email_is_already_in_the_database() {
+
+  }
 }
