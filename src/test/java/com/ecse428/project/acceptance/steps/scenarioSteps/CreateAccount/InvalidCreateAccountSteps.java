@@ -33,10 +33,6 @@ public class InvalidCreateAccountSteps extends CucumberConfig {
   @Autowired
   UserRepository userRepository;
 
-  @When("I enter an email and password")
-  public void enter_an_email_and_password() {
-  }
-
   @Then("the system will not create a new account with email and password")
   public void the_system_will_not_create_a_new_account_with_email_and_password() {
   }

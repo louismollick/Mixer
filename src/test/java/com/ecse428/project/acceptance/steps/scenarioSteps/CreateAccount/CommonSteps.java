@@ -1,8 +1,5 @@
 package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.repository.UserRepository;
 
@@ -22,4 +19,8 @@ public class CommonSteps {
 
   @Autowired
   UserRepository userRepository;
+
+  @When("I enter an email and password")
+  public void i_enter_an_email_and_password() {
+  }
 }

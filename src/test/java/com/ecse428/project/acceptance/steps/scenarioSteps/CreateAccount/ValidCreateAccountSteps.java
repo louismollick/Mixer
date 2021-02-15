@@ -32,10 +32,6 @@ public class ValidCreateAccountSteps extends CucumberConfig {
   @Autowired
   UserRepository userRepository;
 
-  @When("I enter an email and password")
-  public void i_enter_an_email_and_password() {
-  }
-
   @Then("the system will create my account with email and password")
   public void the_system_will_create_my_account_with_email_and_password() {
   }
