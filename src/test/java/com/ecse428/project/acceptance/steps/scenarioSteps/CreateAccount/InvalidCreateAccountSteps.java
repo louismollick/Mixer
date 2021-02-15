@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.addModifierToInventory;
+package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
 
 import com.ecse428.project.acceptance.CucumberConfig;
 import com.ecse428.project.acceptance.TestContext;
