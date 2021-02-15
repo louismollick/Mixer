@@ -13,6 +13,7 @@ import com.ecse428.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,13 +23,15 @@ public class IUserService implements UserService {
     private final UserRepository userRepository;
     private final ModifierRepository modifierRepository;
     private final AlcoholRepository alcoholRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public IUserService(UserRepository userRepository, ModifierRepository modifierRepository,
-            AlcoholRepository alcoholRepository) {
+            AlcoholRepository alcoholRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modifierRepository = modifierRepository;
         this.alcoholRepository = alcoholRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -96,5 +99,11 @@ public class IUserService implements UserService {
         userRepository.save(user.get());
 
         return ResponseEntity.status(HttpStatus.OK).body("Successfully added " + alcoholName + ".");
+    }
+
+    @Override
+    public ResponseEntity<String> postSignup(String username, String password) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

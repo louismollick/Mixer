@@ -15,4 +15,6 @@ public interface UserService {
     public Set<Alcohol> getAlcoholInInventory(long userId);
 
     public ResponseEntity<String> putAlcoholInInventory(long userId, String alcoholName);
+
+    public ResponseEntity<String> postSignup(String username, String password);
 }

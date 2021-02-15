@@ -29,6 +29,8 @@ public class User {
     @Column(unique=true)
     private String username;
 
+    private String password;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_alcohols", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "alcohol_name"))
     private Set<Alcohol> alcoholInInventory;
@@ -36,6 +38,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_modifiers", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "modifier_name"))
     private Set<Modifier> modifiersInInventory;
+
 
     public User() {
     }
@@ -46,12 +49,21 @@ public class User {
         this.modifiersInInventory = new HashSet<Modifier>();
     }
 
-    public User(Long id, String username, Set<Alcohol> alcoholInInventory, Set<Modifier> modifiersInInventory) {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.alcoholInInventory = new HashSet<Alcohol>();
+        this.modifiersInInventory = new HashSet<Modifier>();
+    }
+
+    public User(Long id, String username, String password, Set<Alcohol> alcoholInInventory, Set<Modifier> modifiersInInventory) {
         this.id = id;
         this.username = username;
+        this.password = password;
         this.alcoholInInventory = alcoholInInventory;
         this.modifiersInInventory = modifiersInInventory;
     }
+
 
     public Long getId() {
         return this.id;
@@ -69,6 +81,14 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Set<Alcohol> getAlcoholInInventory() {
         return this.alcoholInInventory;
     }
@@ -83,12 +103,6 @@ public class User {
 
     public void setModifiersInInventory(Set<Modifier> modifiersInInventory) {
         this.modifiersInInventory = modifiersInInventory;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", alcoholInInventory='"
-                + getAlcoholInInventory() + "'" + ", modifiersInInventory='" + getModifiersInInventory() + "'" + "}";
     }
 
     @Override
