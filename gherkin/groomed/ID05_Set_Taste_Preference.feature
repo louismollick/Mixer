@@ -10,7 +10,7 @@ Feature: Set taste option(s)
 		And I am logged in to Mixer
 		And I am prompted to indicate my optional taste preference(s) in the recommender questionnaire
 		And the options listed are
-			| bitter | sweet | fruity | minty | sour | spicy |
+			| SWEET | SOUR | BITTER | SPICY | MINTY | FRUITY |
 
 	Scenario: Valid taste preference(s) set (Success Flow)
 
