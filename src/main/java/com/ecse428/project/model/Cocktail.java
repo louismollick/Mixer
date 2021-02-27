@@ -98,6 +98,12 @@ public class Cocktail {
         this.modifiers = modifiers;
     }
 
+    public Cocktail(String name, List<Alcohol> alcohols, List<Modifier> modifiers) {
+        this.name = name;
+        this.modifiers = modifiers;
+        this.alcohols = alcohols;
+    }
+
     public Cocktail(String name, List<Modifier> modifiers, List<Alcohol> alcohols, Set<TasteType> tasteTypes, StrengthType strengthTypes, ServingSize servingSize) {
         this.name = name;
         this.modifiers = modifiers;
