@@ -32,7 +32,7 @@ dependencies {
 test {
 	filter {
     includeTestsMatching "*UnitTest"
-		//includeTestsMatching "Ecse428ProjectCucumberTestsRunner"
+		includeTestsMatching "Ecse428ProjectCucumberTestsRunner"
   }
 	testLogging {
     events "passed", "skipped", "failed"
