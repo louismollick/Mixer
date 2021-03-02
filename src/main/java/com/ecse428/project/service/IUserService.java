@@ -112,7 +112,9 @@ public class IUserService implements UserService {
 
     @Override
     public ResponseEntity<String> postSignup(String username, String password) {
-        // TODO Auto-generated method stub
-        return null;
+        User user = new User(username, bCryptPasswordEncoder.encode(password));
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successful signup.");
     }
 }
