@@ -7,7 +7,7 @@ Feature: Generate cocktail choice based on inventory and settings
 
     Background: User is logged in with defined inventory and setting
 
-        Given I am a user
+        Given I am a signed up for Mixer
         And I am logged in to Mixer
         And I have items in my inventory
         And I have items in setting list

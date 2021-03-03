@@ -3,6 +3,7 @@ package com.ecse428.project.unit.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.AlcoholController;
 import com.ecse428.project.model.Alcohol;
 
@@ -42,6 +43,9 @@ public class GenerateCocktailControllerIntegrationTest {
 
     @MockBean
     private IAlcoholService alcoholService;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     public void givenInventoryAndPreferences_whenGetCocktails_thenReturnJsonArray() throws Exception {

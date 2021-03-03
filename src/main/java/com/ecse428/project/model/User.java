@@ -16,6 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -27,9 +30,13 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(unique=true)
-    private String username;
-    
+    @Column(unique = true)
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
+    private String email;
+
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -40,31 +47,24 @@ public class User {
     @JoinTable(name = "user_modifiers", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "modifier_name"))
     private Set<Modifier> modifiersInInventory;
 
-
     public User() {
     }
 
-    public User(String username) {
-        this.username = username;
-        this.alcoholInInventory = new HashSet<Alcohol>();
-        this.modifiersInInventory = new HashSet<Modifier>();
-    }
-
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
         this.alcoholInInventory = new HashSet<Alcohol>();
         this.modifiersInInventory = new HashSet<Modifier>();
     }
 
-    public User(Long id, String username, String password, Set<Alcohol> alcoholInInventory, Set<Modifier> modifiersInInventory) {
+    public User(Long id, String email, String password, Set<Alcohol> alcoholInInventory,
+            Set<Modifier> modifiersInInventory) {
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.alcoholInInventory = alcoholInInventory;
         this.modifiersInInventory = modifiersInInventory;
     }
-
 
     public Long getId() {
         return this.id;
@@ -74,12 +74,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -100,7 +100,7 @@ public class User {
 
     public void addAlcoholToInventory(Alcohol chosenAlcohol) {
         this.alcoholInInventory.add(chosenAlcohol);
-	}
+    }
 
     public Set<Modifier> getModifiersInInventory() {
         return this.modifiersInInventory;
@@ -112,7 +112,7 @@ public class User {
 
     public void addModifierToInventory(Modifier chosenModifier) {
         this.modifiersInInventory.add(chosenModifier);
-	}
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -122,14 +122,21 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username)
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email)
                 && Objects.equals(alcoholInInventory, user.alcoholInInventory)
                 && Objects.equals(modifiersInInventory, user.modifiersInInventory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, alcoholInInventory, modifiersInInventory);
+        return Objects.hash(id, email, alcoholInInventory, modifiersInInventory);
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", email='" + getEmail() + "'" + ", password='" + getPassword() + "'"
+                + ", alcoholInInventory='" + getAlcoholInInventory() + "'" + ", modifiersInInventory='"
+                + getModifiersInInventory() + "'" + "}";
     }
 
 }

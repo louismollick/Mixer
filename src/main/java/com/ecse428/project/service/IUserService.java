@@ -20,10 +20,17 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class IUserService implements UserService {
 
-    private final UserRepository userRepository;
-    private final ModifierRepository modifierRepository;
-    private final AlcoholRepository alcoholRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModifierRepository modifierRepository;
+
+    @Autowired
+    private AlcoholRepository alcoholRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public IUserService(UserRepository userRepository, ModifierRepository modifierRepository,
@@ -34,7 +41,10 @@ public class IUserService implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Override
+    public IUserService() {
+	}
+
+	@Override
     public Set<Modifier> getModifiersInInventory(long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -111,10 +121,12 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> postSignup(String username, String password) {
-        User user = new User(username, bCryptPasswordEncoder.encode(password));
-        userRepository.save(user);
+    public ResponseEntity<String> postSignup(User user) {
+        if (userRepository.existsByEmail(user.getEmail()))
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already taken.");
 
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body("Successful signup.");
     }
 }

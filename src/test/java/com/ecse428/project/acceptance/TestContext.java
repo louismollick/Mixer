@@ -13,12 +13,14 @@ import io.cucumber.spring.ScenarioScope;
 @ScenarioScope
 public class TestContext {
 
+  public static String valid_email = "jimmy@hotmail.com";
+  public static String valid_password = "12345678";
   public static String invalid_name = "Invalid Name";
+
   private ResponseEntity<String> response;
   private Modifier chosenModifier;
   private Alcohol chosenAlcohol;
   private User user;
-
 
   public ResponseEntity<String> getResponse() {
     return this.response;
@@ -40,8 +42,8 @@ public class TestContext {
     return this.chosenAlcohol;
   }
 
-  public void setChosenAlcohol(Alcohol alcohol) {
-    this.chosenAlcohol = alcohol;
+  public void setChosenAlcohol(Alcohol chosenAlcohol) {
+    this.chosenAlcohol = chosenAlcohol;
   }
 
   public User getUser() {
@@ -51,5 +53,4 @@ public class TestContext {
   public void setUser(User user) {
     this.user = user;
   }
-
- }
+}

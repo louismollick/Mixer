@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.ecse428.project.acceptance.TestContext;
-import com.ecse428.project.acceptance.steps.commonSteps.UserLoggedInSteps;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.User;
 import com.ecse428.project.repository.UserRepository;
@@ -41,7 +40,7 @@ public class AlcoholAlreadyInInventorySteps {
     user.addAlcoholToInventory(context.getChosenAlcohol());
     userRepository.save(user);
 
-    context.setUser(userRepository.findByUsername(UserLoggedInSteps.userName).get());
+    context.setUser(userRepository.findByEmail(TestContext.valid_email).get());
     assertTrue(context.getUser().getAlcoholInInventory().contains(context.getChosenAlcohol()));
   }
 

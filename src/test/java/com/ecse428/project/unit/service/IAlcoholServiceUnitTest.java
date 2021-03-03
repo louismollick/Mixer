@@ -78,9 +78,4 @@ public class IAlcoholServiceUnitTest {
 
         assertFalse(found);
     }
-
-    @Test
-    public void sanityCheck() {
-        assertTrue(true);
-    }
 }

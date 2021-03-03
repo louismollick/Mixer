@@ -3,6 +3,7 @@ package com.ecse428.project.unit.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.ModifierController;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.Modifier.ModifierType;
@@ -33,6 +34,9 @@ public class ModifierControllerIntegrationTest {
 
     @MockBean
     private IModifierService service;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     public void givenModifiers_whenGetModifiers_thenReturnJsonArray() throws Exception {

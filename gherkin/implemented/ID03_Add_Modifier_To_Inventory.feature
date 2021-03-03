@@ -7,7 +7,7 @@ Feature: Add Modifier To Inventory
 
     Background: User is logged in
 
-        Given I am a user
+        Given I am a signed up for Mixer
         And I am logged in to Mixer
 
     Scenario: Valid modifier added (Success Flow)

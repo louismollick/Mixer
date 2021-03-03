@@ -6,7 +6,7 @@ Feature: Set taste option(s)
 
 	Background: User is logged in
 
-		Given I am a user
+		Given I am a signed up for Mixer
 		And I am logged in to Mixer
 		And I am prompted to indicate my optional taste preference(s) in the recommender questionnaire
 		And the options listed are

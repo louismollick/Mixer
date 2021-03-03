@@ -60,7 +60,6 @@ public class InvalidAlcoholAddedSteps extends CucumberConfig {
         params);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertFalse(Arrays.asList(response.getBody()).contains(context.getChosenAlcohol()));
-
   }
 
 }
