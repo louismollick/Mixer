@@ -17,9 +17,6 @@ import io.cucumber.java.en.Then;
 public class ValidCreateAccountSteps extends CucumberConfig {
 
   @Autowired
-  private TestContext context;
-
-  @Autowired
   TestRestTemplate restTemplate;
 
   @Autowired

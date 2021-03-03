@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.ecse428.project.auth.UserDetailsServiceImpl;
-import com.ecse428.project.controller.AlcoholController;
+import com.ecse428.project.controller.CocktailController;
 import com.ecse428.project.model.Alcohol;
 
 import com.ecse428.project.model.Cocktail;
@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(AlcoholController.class)
+@WebMvcTest(CocktailController.class)
 public class GenerateCocktailControllerIntegrationTest {
 
     @Autowired
@@ -48,6 +49,7 @@ public class GenerateCocktailControllerIntegrationTest {
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
+    @WithMockUser
     public void givenInventoryAndPreferences_whenGetCocktails_thenReturnJsonArray() throws Exception {
 
         Alcohol vodka = new Alcohol("Vodka");
