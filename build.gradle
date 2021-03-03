@@ -35,6 +35,7 @@ dependencies {
 test {
 	filter {
     includeTestsMatching "*UnitTest"
+		includeTestsMatching "*IntegrationTest"
 		includeTestsMatching "Ecse428ProjectCucumberTestsRunner"
   }
 	testLogging {
