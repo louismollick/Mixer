@@ -19,6 +19,6 @@ public interface UserService {
 
     public ResponseEntity<String> postSignup(User user);
 
-    public ResponseEntity<String> deleteAlcoholInInventory( int userId, String alcoholName);
+    public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName);
 
 }

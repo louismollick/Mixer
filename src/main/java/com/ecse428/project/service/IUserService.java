@@ -131,7 +131,7 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> deleteAlcoholInInventory(int userId, String alcoholName){
+    public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName){
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
