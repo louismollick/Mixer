@@ -12,8 +12,7 @@ public interface CocktailService {
 
     public List<Cocktail> getCocktailByNameContains(String cocktailName);
 
-    public List<Cocktail> getCocktailByParams(String cName, Alcohol alcohol, Modifier modifier,
-                                              Cocktail.TasteType tasteType, Cocktail.StrengthType strengthType,
-                                              Cocktail.ServingSize servingSize);
-
+    public List<Cocktail> getCocktailByParams(String cName, List<String> alcohol, List<String> modifier,
+                                              List<String> tasteType, String strengthType,
+                                              String servingSize);
 }
