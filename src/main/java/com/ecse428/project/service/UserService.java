@@ -21,4 +21,8 @@ public interface UserService {
 
     public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName);
 
+    public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName);
+
+    }
+
 }
