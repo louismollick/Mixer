@@ -99,7 +99,7 @@ public class GenerateCocktail extends CucumberConfig {
     @Then("the system fails to find any cocktail")
     public void no_cocktail_generated() {
         System.out.println("Response ::: " + context.getResponse().toString());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, context.getResponse().getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, context.getResponse().getStatusCode());
     }
 
 }
