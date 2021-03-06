@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.CreateAccount;
+package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
