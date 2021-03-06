@@ -152,4 +152,27 @@ public class IUserService implements UserService {
         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + alcoholName + ".");
     }
 
+    @Override
+    public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName){
+        // Find user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+
+        // Find modifier in database
+        Optional<Modifier> modifier = modifierRepository.findByName(modifierName);
+        if (!modifier.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Modifier not found with name " + modifierName + ".");
+        }
+        // Delete alcohol in database
+        user.get().getModifiersInInventory().remove(modifier.get());
+
+        // Save the user
+        userRepository.save(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + modifierName + ".");
+    }
+
 }

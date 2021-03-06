@@ -51,5 +51,10 @@ public class UserController {
     public ResponseEntity<String> deleteAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName){
         return userService.deleteAlcoholInInventory(userId, alcoholName);
     }
+
+    @DeleteMapping("modifier/{modifierName}")
+    public ResponseEntity<String> deleteModifierInInventory(@PathVariable int userId, @PathVariable String modifierName){
+        return userService.deleteModifierInInventory(userId, modifierName);
+    }
     
 }
