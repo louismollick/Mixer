@@ -2,9 +2,7 @@ package com.ecse428.project.controller;
 
 import java.util.List;
 
-import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
-import com.ecse428.project.model.Modifier;
 import com.ecse428.project.service.CocktailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
