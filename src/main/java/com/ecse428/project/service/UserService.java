@@ -23,6 +23,5 @@ public interface UserService {
 
     public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName);
 
-    }
 
 }
