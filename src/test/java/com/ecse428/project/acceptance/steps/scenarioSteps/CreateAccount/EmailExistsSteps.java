@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
+package com.ecse428.project.acceptance.steps.scenarioSteps.CreateAccount;
 
 import static org.junit.Assert.assertEquals;
 
