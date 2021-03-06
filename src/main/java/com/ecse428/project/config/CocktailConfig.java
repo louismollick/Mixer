@@ -62,10 +62,11 @@ public class CocktailConfig {
             Cocktail orangeMargarita = new Cocktail("Orange Margarita", List.of(orangeJuice, limeJuice), List.of(tequila, tripleSec), Set.of(TasteType.SWEET, TasteType.FRUITY), StrengthType.STRONG, ServingSize.INDIVIDUAL);
             Cocktail sangria = new Cocktail("Sangria", List.of(orangeJuice, sprite), List.of(redWine), Set.of(TasteType.FRUITY), StrengthType.MEDIUM, ServingSize.GROUP);
             Cocktail peachPunch = new Cocktail("Peach Punch", List.of(lemonSoda, sprite, peachJuice), List.of(sparklingWine, peachSchnapps), Set.of(TasteType.FRUITY), StrengthType.MEDIUM,ServingSize.GROUP);
+            Cocktail bourbonAndSugarSyrup = new Cocktail("Bourbon Syrup", List.of(sugarSyrup), List.of(bourbon), Set.of(TasteType.SWEET), StrengthType.MEDIUM, ServingSize.INDIVIDUAL);
 
             alcoholRepository.saveAll(List.of(vodka, gin, whiskey, tequila, rum, scotch, brandy, bourbon, cointreau, champagne, tripleSec, redWine, sparklingWine, peachSchnapps));
             modifierRepository.saveAll(List.of(sugarSyrup, limeJuice, lemonJuice, vermouth, tonic, soda, tomatoJuice, orangeJuice, grenadine, sprite, lemonSoda, peachJuice));
-            cocktailRepository.saveAll(List.of(ginAndTonic, vodkaSoda, margarita, bloodyMary, mimosa, daiquiri, tequilaSunrise, orangeMargarita, sangria, peachPunch));
+            cocktailRepository.saveAll(List.of(ginAndTonic, vodkaSoda, margarita, bloodyMary, mimosa, daiquiri, tequilaSunrise, orangeMargarita, sangria, peachPunch, bourbonAndSugarSyrup));
         };
     }
 }

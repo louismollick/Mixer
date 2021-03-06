@@ -20,20 +20,20 @@ public class CocktailController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Cocktail> getCocktail(){
+    public List<Cocktail> getCocktail() {
         return cocktailService.getCocktail();
     }
 
     // Not needed, left it just in case
     @RequestMapping(value = "/{cocktailName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Cocktail> getCocktailByNameContains(@PathVariable String cocktailName){
+    public List<Cocktail> getCocktailByNameContains(@PathVariable String cocktailName) {
         return cocktailService.getCocktailByNameContains(cocktailName);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Cocktail> getCocktailByParams(@RequestParam(required = false) String cName, @RequestParam(required = false) List<String> alcohol, @RequestParam(required = false) List<String> modifier,
                                               @RequestParam(required = false) List<String> tasteType, @RequestParam(required = false) String strengthType,
-                                              @RequestParam(required = false) String servingSize){
+                                              @RequestParam(required = false) String servingSize) {
         return cocktailService.getCocktailByParams(cName, alcohol, modifier, tasteType, strengthType, servingSize);
     }
 }
