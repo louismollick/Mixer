@@ -9,16 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IModifierService implements ModifierService{
+public class IModifierService implements ModifierService {
 
-  private final ModifierRepository modifierRepository;
+    @Autowired
+    private ModifierRepository modifierRepository;
 
-  @Autowired
-  public IModifierService(ModifierRepository modifierRepository) {
-    this.modifierRepository = modifierRepository;
-  }
-  
-  public List<Modifier> getModifiers(){
-    return modifierRepository.findAll();
-  }
+    @Autowired
+    public IModifierService(ModifierRepository modifierRepository) {
+        this.modifierRepository = modifierRepository;
+    }
+
+    public IModifierService() {
+    }
+
+    @Override
+    public List<Modifier> getModifiers() {
+        return modifierRepository.findAll();
+    }
 }

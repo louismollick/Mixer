@@ -1,30 +1,19 @@
 package com.ecse428.project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.*;
 
 @Entity
 @Table
 public class Modifier {
   public enum ModifierType {
-    FORTIFIED_WINE, LIQUER, SYRUP, JUICE, SMOOTHING_AGENT
+    FORTIFIED_WINE, LIQUER, SYRUP, JUICE, SMOOTHING_AGENT, SODA
   }
 
   @Id
-  @SequenceGenerator(
-    name = "modifier_sequence",
-    sequenceName = "modifier_sequence",
-    allocationSize = 1
-  )
-  @GeneratedValue(
-    strategy = GenerationType.SEQUENCE,
-    generator = "modifier_sequence"
-  )
-  private Long id;
+  @Column(name = "modifier_name")
   private String name;
   private ModifierType type;
 
@@ -36,15 +25,8 @@ public class Modifier {
     this.type = type;
   }
 
-  public Modifier(Long id, String name, ModifierType type) {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-  }
-
-  public Long getId() {
-    return this.id;
-  }
+  @ManyToMany(mappedBy = "modifiers")
+  private List<Cocktail> cocktails;
 
   public String getName() {
     return this.name;
@@ -56,6 +38,23 @@ public class Modifier {
 
   @Override
   public String toString() {
-    return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", type='" + getType() + "'" + "}";
+    return "{" + " name='" + getName() + "'" + ", type='" + getType() + "'" + "}";
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Modifier)) {
+      return false;
+    }
+    Modifier modifier = (Modifier) o;
+    return Objects.equals(name, modifier.name) && Objects.equals(type, modifier.type);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, type);
+  }
+
 }

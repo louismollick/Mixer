@@ -1,50 +1,60 @@
 package com.ecse428.project.acceptance.steps.scenarioSteps.addModifierToInventory;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.ecse428.project.acceptance.CucumberConfig;
+import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ValidModifierAddedSteps {
+public class ValidModifierAddedSteps extends CucumberConfig {
+
+  @Autowired
+  private TestContext context;
 
   @Autowired
   TestRestTemplate restTemplate;
 
-  private Modifier chosen;
+  @Autowired
+  UserRepository userRepository;
 
-  @When("I select a modifier")
+  @When("I select a valid modifier")
   public void i_select_a_modifier() {
     // Query all modifiers
     ResponseEntity<Modifier[]> response = restTemplate.getForEntity("/api/modifier", Modifier[].class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
     // Select one
-    chosen = response.getBody()[0];
-    assertNotNull(chosen);
-    System.out.println(chosen);
-  }
-
-  @When("I add confirm adding it to my inventory")
-  public void i_add_confirm_adding_it_to_my_inventory() {
-    // Get user
-    // Add modifier to user's inventory
-    // Save user to database
-    throw new io.cucumber.java.PendingException();
+    context.setChosenModifier(response.getBody()[0]);
+    assertNotNull(context.getChosenModifier());
   }
 
   @Then("the system will add the modifier to my inventory")
   public void the_system_will_add_the_modifier_to_my_inventory() {
-    // Assert that the modifier is in the user's inventory either using the
-    // UserRepository
-    // or by querying it with the restTemplate
-    throw new io.cucumber.java.PendingException();
+    assertEquals(HttpStatus.OK, context.getResponse().getStatusCode());
+    final String uri_req = "/api/user/{userId}/modifier/";
+    Map<String, String> params = new HashMap<String, String>();
+    params.put("userId", context.getUser().getId().toString());
+
+    ResponseEntity<Modifier[]> response = restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class,
+        params);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    assertTrue(Arrays.asList(response.getBody()).contains(context.getChosenModifier()));
   }
 }
