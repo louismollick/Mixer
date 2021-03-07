@@ -66,7 +66,7 @@ public class ModifierControllerIntegrationTest {
     @WithMockUser
     public void givenModifiers_whenDeleteModifiers_thenReturnNewJsonArray() throws Exception {
         long num = 100L;
-        String uri_req = "api/user/100L/modifier";
+        // Optional<User> user = userRepository.findById(userId);
         Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
         Modifier madiera = new Modifier("Madiera", ModifierType.FORTIFIED_WINE);
         Modifier orangeJuice = new Modifier("Orange Juice", ModifierType.JUICE);
@@ -79,6 +79,7 @@ public class ModifierControllerIntegrationTest {
 
         given(userService.getModifiersInInventory(num)).willReturn(modifiersInInventory);
 
+        String uri_req = "/api/user/100L/modifier";
         mvc.perform(MockMvcRequestBuilders.get(uri_req));
     }
 }
