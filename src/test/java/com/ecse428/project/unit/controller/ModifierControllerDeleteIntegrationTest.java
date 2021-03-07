@@ -45,7 +45,7 @@ public class ModifierControllerDeleteIntegrationTest {
     @Test
     @WithMockUser
     public void givenModifiers_whenDeleteModifiers_thenReturnNewJsonArray() throws Exception {
-        long num = 100L;
+        long num = 44;
         // Optional<User> user = userRepository.findById(userId);
         Modifier redBull = new Modifier("RedBull", ModifierType.SMOOTHING_AGENT);
         Modifier madiera = new Modifier("Madiera", ModifierType.FORTIFIED_WINE);
@@ -59,8 +59,9 @@ public class ModifierControllerDeleteIntegrationTest {
 
         given(userService.getModifiersInInventory(num)).willReturn(modifiersInInventory);
 
-        String uri_req = "/api/user/100L/modifier/Madiera";
+        String uri_req = "/api/user/"+ num +"/modifier/Madiera";
         mvc.perform(MockMvcRequestBuilders.delete(uri_req))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 }
