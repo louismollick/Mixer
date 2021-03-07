@@ -22,5 +22,6 @@ Feature: Remove Alcohol Type From Inventory
 
         When I select an alcohol type
         And the alcohol type does not exist in inventory
+        And I confirm removing it from inventory
         Then the system will display an error
         And no item will be removed
