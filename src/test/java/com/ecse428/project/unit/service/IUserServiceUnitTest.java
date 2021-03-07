@@ -59,11 +59,6 @@ public class IUserServiceUnitTest {
         }
     }
 
-    @Before
-    public void setUp() {
-        Modifier sod = new Modifier("Fanta", Modifier.ModifierType.SODA);
-        when(modifierRepository.findAll()).thenReturn(Arrays.asList(sod));
-    }
 
     @Test
     public void removeModifier_Inventory() {
