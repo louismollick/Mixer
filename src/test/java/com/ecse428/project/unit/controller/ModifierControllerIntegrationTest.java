@@ -67,9 +67,9 @@ public class ModifierControllerIntegrationTest {
     public void givenModifiers_whenDeleteModifiers_thenReturnNewJsonArray() throws Exception {
         long num = 100L;
         // Optional<User> user = userRepository.findById(userId);
-        Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
+        Modifier redBull = new Modifier("RedBull", ModifierType.SMOOTHING_AGENT);
         Modifier madiera = new Modifier("Madiera", ModifierType.FORTIFIED_WINE);
-        Modifier orangeJuice = new Modifier("Orange Juice", ModifierType.JUICE);
+        Modifier orangeJuice = new Modifier("OrangeJuice", ModifierType.JUICE);
         Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
         modifiersInInventory.add(redBull);
         modifiersInInventory.add(madiera);
@@ -79,7 +79,9 @@ public class ModifierControllerIntegrationTest {
 
         given(userService.getModifiersInInventory(num)).willReturn(modifiersInInventory);
 
-        String uri_req = "/api/user/100L/modifier";
-        mvc.perform(MockMvcRequestBuilders.get(uri_req));
+        String uri_req = "/api/user/100L/modifier/Madiera";
+        mvc.perform(MockMvcRequestBuilders.delete(uri_req))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 }
