@@ -18,4 +18,10 @@ public interface UserService {
     public ResponseEntity<String> putAlcoholInInventory(long userId, String alcoholName);
 
     public ResponseEntity<String> postSignup(User user);
+
+    public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName);
+
+    public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName);
+
+
 }
