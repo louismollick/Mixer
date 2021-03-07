@@ -7,6 +7,8 @@ import static org.mockito.Mockito.*;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.repository.ModifierRepository;
 import com.ecse428.project.service.IModifierService;
+import com.ecse428.project.model.User;
+import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.service.ModifierService;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +29,8 @@ import com.ecse428.project.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 @RunWith(SpringRunner.class)
 public class IUserServiceUnitTest {
@@ -67,7 +68,7 @@ public class IUserServiceUnitTest {
     @Test
     public void removeModifier_Inventory() {
         long num = 22;
-        Modifier dietcoke = new Modifier("DietCoke", ModifierType.SMOOTHING_AGENT);
+        Modifier dietcoke = new Modifier("DietCoke", Modifier.ModifierType.SMOOTHING_AGENT);
         Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
         modifiersInInventory.add(dietcoke);
         Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
