@@ -43,6 +43,11 @@ public class IUserServiceUnitTest {
     @MockBean
     private ModifierRepository modifierRepository;
 
+    @MockBean
+    private AlcoholRepository a;
+
+    @MockBean
+    private BCryptPasswordEncoder b;
 
     @TestConfiguration
     static class IUserServiceTestContextConfiguration {
