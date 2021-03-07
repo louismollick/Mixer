@@ -1,13 +1,16 @@
 package com.ecse428.project.unit.controller;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.ModifierController;
+import com.ecse428.project.controller.UserController;
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.model.User;
+import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier.ModifierType;
 import com.ecse428.project.service.IModifierService;
+import com.ecse428.project.service.IUserService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,12 +40,14 @@ public class ModifierControllerIntegrationTest {
     private IModifierService service;
 
     @MockBean
+    private IUserService userService;
+
+    @MockBean
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @WithMockUser
     public void givenModifiers_whenGetModifiers_thenReturnJsonArray() throws Exception {
-
         Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
 
         List<Modifier> allModifiers = Arrays.asList(redBull);
@@ -55,5 +60,28 @@ public class ModifierControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(redBull.getName())));
+    }
+
+    @Test
+    @WithMockUser
+    public void givenModifiers_whenDeleteModifiers_thenReturnNewJsonArray() throws Exception {
+        long num = 100L;
+        String uri_req = "api/user/100L";
+        Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
+        Modifier madiera = new Modifier("Madiera", ModifierType.FORTIFIED_WINE);
+        Modifier orangeJuice = new Modifier("Orange Juice", ModifierType.JUICE);
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        modifiersInInventory.add(redBull);
+        modifiersInInventory.add(madiera);
+        modifiersInInventory.add(orangeJuice);
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
+        User newUser = new User(num,"newUser@gmail.com","abcdefg", alcoholInInventory, modifiersInInventory);
+
+        given(userService.getModifiersInInventory(num)).willReturn(modifiersInInventory);
+
+        mvc.perform(MockMvcRequestBuilders
+                .get(uri_req))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 }
