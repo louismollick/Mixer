@@ -66,14 +66,18 @@ public class IUserServiceUnitTest {
 
     @Test
     public void removeModifier_Inventory() {
-        long num = 44;
+        long num = 22;
+        Modifier dietcoke = new Modifier("DietCoke", ModifierType.SMOOTHING_AGENT);
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        modifiersInInventory.add(dietcoke);
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
         User newUser = new User(num,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
-        User testuser = userRepository.findByEmail(newUser.getEmail());
+        Optional<User> testuser = userRepository.findByEmail(newUser.getEmail());
         long testuserid = testuser.getId();
-        String name = "sod";
+        String name = "dietcoke";
         Set<Modifier> modifier = userService.getModifiersInInventory(testuserid);
-        userService.putModifierInInventory(testuserid, "Fanta");
-        userService.deleteModifierInInventory(testuserid, "Fanta");
+        userService.putModifierInInventory(testuserid, "DietCoke");
+        userService.deleteModifierInInventory(testuserid, "DietCoke");
         boolean state = false;
 
         for (Modifier m : modifier) {
