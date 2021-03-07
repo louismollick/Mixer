@@ -66,9 +66,10 @@ public class IUserServiceUnitTest {
 
     @Test
     public void removeModifier_Inventory() {
-        User testuser = new User("tks@hotmail.com", "888888");
-        userRepository.save(testuser);
-        long testuserid = 4;
+        long num = 44;
+        User newUser = new User(num,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
+        User testuser = userRepository.findByEmail(newUser.getEmail());
+        long testuserid = testuser.getId();
         String name = "sod";
         Set<Modifier> modifier = userService.getModifiersInInventory(testuserid);
         userService.putModifierInInventory(testuserid, "Fanta");
