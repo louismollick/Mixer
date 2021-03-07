@@ -62,10 +62,5 @@ public class ModifierControllerDeleteIntegrationTest {
         String uri_req = "/api/user/"+ num +"/modifier/Madiera";
         mvc.perform(MockMvcRequestBuilders.delete(uri_req))
                 .andExpect(status().isOk());
-        
-        String new_uri_req = "/api/user/"+ num +"/modifier";
-        mvc.perform(MockMvcRequestBuilders.get(new_uri_req))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
     }
 }
