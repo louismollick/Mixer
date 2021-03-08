@@ -1,0 +1,81 @@
+  
+package com.ecse428.project.unit.service;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
+
+import com.ecse428.project.model.Modifier;
+import com.ecse428.project.repository.ModifierRepository;
+import com.ecse428.project.service.IModifierService;
+import com.ecse428.project.model.User;
+import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.service.ModifierService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.ecse428.project.model.User;
+import com.ecse428.project.repository.AlcoholRepository;
+import com.ecse428.project.repository.UserRepository;
+import com.ecse428.project.service.IUserService;
+import com.ecse428.project.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import static org.mockito.BDDMockito.given;
+import java.util.*;
+
+
+@RunWith(SpringRunner.class)
+public class IUserServiceUnitTest {
+
+    @Autowired
+    private IUserService userService;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private ModifierRepository modifierRepository;
+
+    @MockBean
+    private AlcoholRepository a;
+
+    @MockBean
+    private BCryptPasswordEncoder b;
+
+    @TestConfiguration
+    static class IUserServiceTestContextConfiguration {
+
+        @Bean
+        public UserService userService() {
+            return new IUserService();
+        }
+    }
+
+
+    @Test
+    public void removeAlcohol_Inventory() {
+        long id = 22;
+        var name = "Vodka";
+        Alcohol vodka = new Alcohol(name);
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Alcohol> alcoholsInInventory = new HashSet<Alcohol>();
+        alcoholsInInventory.add(vodka);
+        User newUser = new User(id,"user@gmail.com","123456789", alcoholsInInventory, modifiersInInventory);
+
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(a.findByName(name)).willReturn(Optional.of(vodka));
+
+        userService.deleteAlcoholInInventory(id, "Vodka");
+        assertFalse(newUser.getAlcoholInInventory().contains(vodka));
+    }
+  
+}
