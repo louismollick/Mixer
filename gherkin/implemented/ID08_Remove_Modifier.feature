@@ -9,21 +9,18 @@ Feature: Remove Modifier From Inventory
 
       Given I am a signed up for Mixer
       And I am logged in to Mixer
-      And I have item(s) in my inventory
 
    Scenario: Remove a valid modifier from inventory (Success Flow)
 
       When I select a modifier
       And the modifier exists in my inventory
-      And I confirm removing it from my inventory
+      And I confirm removing the modifier from inventory
       Then the system will remove the modifier from my inventory
 
    Scenario: Modifier does not exist in inventory (Error Case)
 
       When I select a modifier
       And the modifier does not exist in my inventory
-      And I confirm removing it from inventory
-      Then the system will display an error
+      And I confirm removing the modifier from inventory
+      Then the system will display an error about the modifier
       And no item will be removed
-
-

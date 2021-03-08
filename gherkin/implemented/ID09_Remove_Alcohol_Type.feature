@@ -9,19 +9,18 @@ Feature: Remove Alcohol Type From Inventory
 
         Given I am a signed up for Mixer
         And I am logged in to Mixer
-        And I have items in my inventory
 
     Scenario: Remove a valid alcohol type from inventory (Success Flow)
 
         When I select an alcohol type
         And the alcohol type exists in inventory
-        And I confirm removing it from inventory
+        And I confirm removing the alcohol from inventory
         Then the system will remove the alcohol type from my inventory
 
     Scenario: Alcohol type does not exist in inventory (Error Case)
 
         When I select an alcohol type
         And the alcohol type does not exist in inventory
-        And I confirm removing it from inventory
-        Then the system will display an error
+        And I confirm removing the alcohol from inventory
+        Then the system will display an error about the alcohol
         And no item will be removed

@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.ecse428.project.model.Modifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-
 
 public class CommonSteps {
 
@@ -31,7 +31,7 @@ public class CommonSteps {
   @Autowired
   UserRepository userRepository;
 
-  @When("I confirm removing it from inventory")
+  @When("I confirm removing the modifier from inventory")
   public void i_confirm_removing_my_inventory() {
     // Send request
     final String uri_req = "/api/user/{userId}/modifier/{modifierName}";
@@ -50,5 +50,10 @@ public class CommonSteps {
     // Select one
     context.setChosenModifier(response.getBody()[0]);
     assertNotNull(context.getChosenModifier());
+  }
+
+  @Then("no item will be removed")
+  public void no_item_will_be_removed() {
+    // Write code here that turns the phrase above into concrete actions
   }
 }

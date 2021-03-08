@@ -31,7 +31,7 @@ public class CommonSteps {
   @Autowired
   UserRepository userRepository;
 
-  @When("I confirm removing it from inventory")
+  @When("I confirm removing the alcohol from inventory")
   public void i_confirm_removing_it_my_inventory() {
     // Send request
     final String uri_req = "/api/user/{userId}/alcohol/{alcoholName}";
