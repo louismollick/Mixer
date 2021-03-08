@@ -28,7 +28,7 @@ import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import static org.mockito.BDDMockito.given;
 import java.util.*;
 
 
@@ -62,30 +62,19 @@ public class IUserServiceUnitTest {
 
     @Test
     public void removeModifier_Inventory() {
-        long num = 22;
-        Modifier dietcoke = new Modifier("DietCoke", Modifier.ModifierType.SMOOTHING_AGENT);
+        long id = 22;
+        var name = "DietCoke";
+        Modifier dietcoke = new Modifier(name, Modifier.ModifierType.SMOOTHING_AGENT);
         Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
         modifiersInInventory.add(dietcoke);
         Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
-        User newUser = new User(num,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
-        Optional<User> testuser = userRepository.findByEmail(newUser.getEmail());
-        long testuserid = testuser.getId();
-        String name = "dietcoke";
-        Set<Modifier> modifier = userService.getModifiersInInventory(testuserid);
-        userService.putModifierInInventory(testuserid, "DietCoke");
-        userService.deleteModifierInInventory(testuserid, "DietCoke");
-        boolean state = false;
+        User newUser = new User(id,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
 
-        for (Modifier m : modifier) {
-            if (m.getName().equals(name)) {
-                state = false;
-                break;
-            }
-            else state = false;
-        }
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(modifierRepository.findByName(name)).willReturn(Optional.of(dietcoke));
 
-        assertFalse(state);
-
+        userService.deleteModifierInInventory(id, "DietCoke");
+        assertFalse(newUser.getModifiersInInventory().contains(dietcoke));
     }
   
 }
