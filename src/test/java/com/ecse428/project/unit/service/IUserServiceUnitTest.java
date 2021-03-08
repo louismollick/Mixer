@@ -76,5 +76,22 @@ public class IUserServiceUnitTest {
         userService.deleteModifierInInventory(id, "DietCoke");
         assertFalse(newUser.getModifiersInInventory().contains(dietcoke));
     }
+
+    @Test
+    public void removeAlcohol_Inventory() {
+        long id = 22;
+        var name = "Vodka";
+        Alcohol vodka = new Alcohol(name);
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Alcohol> alcoholsInInventory = new HashSet<Alcohol>();
+        alcoholsInInventory.add(vodka);
+        User newUser = new User(id,"user@gmail.com","123456789", alcoholsInInventory, modifiersInInventory);
+
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(a.findByName(name)).willReturn(Optional.of(vodka));
+
+        userService.deleteAlcoholInInventory(id, "Vodka");
+        assertFalse(newUser.getAlcoholInInventory().contains(vodka));
+    }
   
 }
