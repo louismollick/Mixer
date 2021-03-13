@@ -23,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const notVisiblePaths = ['/login', '/signup'];
+
 const Header = (props) => {
   const classes = useStyles();
   const { sections, title, location } = props;
 
-  const isVisible = location.pathname !== '/login';
+  const isVisible = !(notVisiblePaths.includes(location.pathname));
 
   return ( isVisible &&
     <React.Fragment>
