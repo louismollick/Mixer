@@ -60,10 +60,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   @Override
   public void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
       Authentication auth) throws IOException, ServletException {
-
-    String token = JWT.create()
-        .withSubject(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername())
+    var details = (AuthUser) auth.getPrincipal();
+    String token = JWT.create().withSubject(details.getUsername())
         .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).sign(HMAC512(SECRET.getBytes()));
-    res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+    // put token in body and header, since CORS prevents getting it from headers
+    // without more work
+    var tokenStr = TOKEN_PREFIX + token;
+    res.addHeader(HEADER_STRING, tokenStr);
+    res.getWriter().write(
+        new ObjectMapper().writeValueAsString(new TokenResponse(tokenStr, details.getUsername(), details.getUserId())));
+    res.getWriter().flush();
   }
 }
