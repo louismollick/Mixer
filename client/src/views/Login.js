@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -37,12 +38,14 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Login = ({ location }) => {
+const Login = ({ setLoggedIn }) => {
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showSignup, setShowSignup] = useState(false);
   const [showLoginError, setShowLoginError] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const classes = useStyles();
 
   const formNotEmpty = () => {
@@ -61,16 +64,23 @@ const Login = ({ location }) => {
       password
     }).then(res => {
       if (res.status === 200) {
-        console.log("HERE:", res.headers);
-        window.localStorage.setItem('token', res.headers.get('Authorization').replace('Bearer ', ''));
-        location.replace('/?login=true');
+        console.log("HERE:", res);
+        window.localStorage.setItem('token', res.data.token);
+        window.localStorage.setItem('email', res.data.email);
+        window.localStorage.setItem('userId', res.data.userId);
+        setLoggedIn(true);
+        setRedirect(true);
       } else {
         setShowLoginError(true);
       }
     })
       .catch(e => {
-        console.error(e);
-        setShowError(true);
+        if (e.response.status === 403)
+          setShowLoginError(true);
+        else {
+          console.error(e);
+          setShowError(true);
+        }
       })
   }
 
@@ -78,6 +88,12 @@ const Login = ({ location }) => {
     if (new URLSearchParams(location.search).get("signup"))
       setShowSignup(true);
   }, [location]);
+
+  if (redirect)
+    return <Redirect push to={{
+      pathname: "/",
+      state: { redirect: 'login' }
+    }} />
 
   return (
     <>
@@ -133,8 +149,8 @@ const Login = ({ location }) => {
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  Don't have an account? Sign up
-              </Link>
+                  {"Don't have an account? Sign up"}
+                </Link>
               </Grid>
             </Grid>
           </form>
