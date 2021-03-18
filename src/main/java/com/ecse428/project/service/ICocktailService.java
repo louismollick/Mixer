@@ -1,8 +1,7 @@
 package com.ecse428.project.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
@@ -49,14 +48,11 @@ public class ICocktailService implements CocktailService{
         final List<Alcohol> a_list = new ArrayList<>();
         final List<Modifier> m_list = new ArrayList<>();
         final List<Cocktail.TasteType> t_list = new ArrayList<>();
-        final Alcohol a_res;
-        final Modifier m_res;
-        final Cocktail.TasteType t_res;
         final Cocktail.StrengthType st_found;
         final Cocktail.ServingSize ss_found;
         final String cName_res = cName == null ? new String() : cName;
 
-        if (alcohols != null) {
+        if (!alcohols.isEmpty()) {
             for (String a : alcohols) {
                 Optional<Alcohol> a_found = alcoholRepository.findByName(getCase(a));
 
@@ -66,9 +62,11 @@ public class ICocktailService implements CocktailService{
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, a + " is not a valid alcohol.");
                 }
             }
+        } else {
+            a_list.add(null);
         }
 
-        if (modifiers != null) {
+        if (!modifiers.isEmpty()) {
             for (String m : modifiers) {
                 Optional<Modifier> m_found = modifierRepository.findByName(getCase(m));
 
@@ -78,9 +76,11 @@ public class ICocktailService implements CocktailService{
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, m + " is not a valid modifier.");
                 }
             }
+        } else {
+            m_list.add(null);
         }
 
-        if (tasteTypes != null) {
+        if (!tasteTypes.isEmpty()) {
             for (String t : tasteTypes) {
                 Cocktail.TasteType t_found;
 
@@ -92,21 +92,36 @@ public class ICocktailService implements CocktailService{
 
                 t_list.add(t_found);
             }
+        } else {
+            t_list.add(null);
         }
 
-        a_res = a_list.isEmpty() ? null : a_list.get(0);
-        m_res = m_list.isEmpty() ? null : m_list.get(0);
-        t_res = t_list.isEmpty() ? null : t_list.get(0);
+        List<Cocktail> cocktails;
+        List<Cocktail> res = new ArrayList<Cocktail>();
+
         st_found = (strengthType == null || strengthType.isEmpty()) ? null : Cocktail.StrengthType.valueOf(strengthType.toUpperCase());
         ss_found = (servingSize == null || servingSize.isEmpty()) ? null : Cocktail.ServingSize.valueOf(servingSize.toUpperCase());
-        
-        List<Cocktail> cocktails = cocktailRepository.findByParams(cName_res, a_res, m_res, t_res, st_found, ss_found);
 
-        return cocktails;
+        for (Alcohol a : a_list) {
+            for (Modifier m : m_list) {
+                for (Cocktail.TasteType t : t_list){
+                    cocktails = cocktailRepository.findByParams(cName_res, a, m, t, st_found, ss_found);
+                    for (Cocktail c : cocktails){
+                        if (!res.contains(c)){
+                            res.add(c);
+                        }
+                    }
+                }
+            }
+        }
+
+        return res;
     }
 
     @NotNull
     private String getCase (@NotNull String anyCap) {
-        return anyCap.substring(0, 1).toUpperCase() + anyCap.substring(1);
+        return Arrays.stream(anyCap.split("\\s+"))
+                .map(t -> t.substring(0, 1).toUpperCase() + t.substring(1))
+                .collect(Collectors.joining(" "));
     }
 }
