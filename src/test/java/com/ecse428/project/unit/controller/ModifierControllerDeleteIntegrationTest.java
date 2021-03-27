@@ -30,32 +30,37 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ModifierController.class)
-public class ModifierControllerIntegrationTest {
+@WebMvcTest(UserController.class)
+public class ModifierControllerDeleteIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private IModifierService service;
+    private IUserService userService;
 
     @MockBean
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @WithMockUser
-    public void givenModifiers_whenGetModifiers_thenReturnJsonArray() throws Exception {
-        Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
+    public void givenModifiers_whenDeleteModifiers_thenReturnNewJsonArray() throws Exception {
+        long num = 44;
+        // Optional<User> user = userRepository.findById(userId);
+        Modifier redBull = new Modifier("RedBull", ModifierType.SMOOTHING_AGENT);
+        Modifier madiera = new Modifier("Madiera", ModifierType.FORTIFIED_WINE);
+        Modifier orangeJuice = new Modifier("OrangeJuice", ModifierType.JUICE);
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        modifiersInInventory.add(redBull);
+        modifiersInInventory.add(madiera);
+        modifiersInInventory.add(orangeJuice);
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
+        User newUser = new User(num,"newUser@gmail.com","abcdefg", alcoholInInventory, modifiersInInventory);
 
-        List<Modifier> allModifiers = Arrays.asList(redBull);
+        given(userService.getModifiersInInventory(num)).willReturn(modifiersInInventory);
 
-        given(service.getModifiers()).willReturn(allModifiers);
-
-        mvc.perform(MockMvcRequestBuilders
-                .get("/api/modifier")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(redBull.getName())));
+        String uri_req = "/api/user/"+ num +"/modifier/Madiera";
+        mvc.perform(MockMvcRequestBuilders.delete(uri_req))
+                .andExpect(status().isOk());
     }
 }

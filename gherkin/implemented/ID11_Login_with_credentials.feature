@@ -10,9 +10,7 @@ Feature: Login with credentials
     When I submit a valid email and password pair
     Then the system will confirm the validity of the credentials
     And will return a valid login token
-    And it will be automatically stored in my browser
-    And I will be redirected to the main page of Mixer
-
+  
   Scenario: Invalid credentials (Error Flow)
 
     When I submit an incorrect email and password pair
