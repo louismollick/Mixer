@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Signup = () => {
+    const [errorMessage, setErrorMessage] = useState("");
     const classes = useStyles();
 
     function handleSubmit(event) {
@@ -53,13 +54,10 @@ const Signup = () => {
             } else if (response.status === 409) {
                 console.log('Email already exists');
                 document.getElementById("error-msg").style.display = "inline";
-                document.getElementById("error-msg").innerText =
-                    "Looks like that email address already has an account!";
+                setErrorMessage("Looks like that email address already has an account!");
             } else if (response.status === 400) {
                 console.log("Password too short?");
-                document.getElementById("error-msg").style.display = "inline";
-                document.getElementById("error-msg").innerText =
-                    "Password must be at least 8 characters!";
+                setErrorMessage("Password must be at least 8 characters!");
             }
         })
     };
@@ -100,10 +98,10 @@ const Signup = () => {
                             />
                         </Grid>
                     </Grid>
-                    <Box container justify="center" display="none" id="error-msg">
+                    <Box justify="center" id="error-msg">
                         <Box>
                             <Typography component="h6" variant="h6">
-
+                                {errorMessage}
                             </Typography>
                         </Box>
                     </Box>
