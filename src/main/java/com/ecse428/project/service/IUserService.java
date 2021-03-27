@@ -184,7 +184,7 @@ public class IUserService implements UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
         }
         //Delete user
-        userRepository.delete(user);
+        userRepository.delete(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted " + userId + ".");
     }
 
