@@ -1,5 +1,7 @@
 package com.ecse428.project.model;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -138,5 +140,7 @@ public class User {
                 + ", alcoholInInventory='" + getAlcoholInInventory() + "'" + ", modifiersInInventory='"
                 + getModifiersInInventory() + "'" + "}";
     }
+
+
 
 }

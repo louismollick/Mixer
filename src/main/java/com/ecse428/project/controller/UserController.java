@@ -1,5 +1,6 @@
 package com.ecse428.project.controller;
 
+import com.ecse428.project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,12 @@ public class UserController {
     @DeleteMapping("modifier/{modifierName}")
     public ResponseEntity<String> deleteModifierInInventory(@PathVariable int userId, @PathVariable String modifierName){
         return userService.deleteModifierInInventory(userId, modifierName);
+    }
+
+
+    @DeleteMapping("delete/users/{userId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable int userId){
+        return userService.deleteAccount(userId);
     }
     
 }

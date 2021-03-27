@@ -175,4 +175,18 @@ public class IUserService implements UserService {
         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + modifierName + ".");
     }
 
+    @Override
+    public ResponseEntity<String> deleteAccount(long userId)
+    {
+        //Find the user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+        //Delete user
+        userRepository.delete(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted " + userId + ".");
+    }
+
 }
