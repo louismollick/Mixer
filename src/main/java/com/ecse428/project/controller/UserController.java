@@ -63,5 +63,4 @@ public class UserController {
     public ResponseEntity<String> deleteAccount(@PathVariable int userId){
         return userService.deleteAccount(userId);
     }
-    
 }
