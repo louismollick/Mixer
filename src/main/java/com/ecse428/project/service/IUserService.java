@@ -185,7 +185,6 @@ public class IUserService implements UserService {
         }
         //Delete user
         userRepository.delete(user);
-
         return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted " + userId + ".");
     }
 

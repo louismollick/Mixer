@@ -28,5 +28,4 @@ public interface UserService {
     public ResponseEntity<String> deleteAccount(long userId);
 
 
-
 }

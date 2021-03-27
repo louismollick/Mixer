@@ -58,7 +58,6 @@ public class UserController {
         return userService.deleteModifierInInventory(userId, modifierName);
     }
 
-
     @DeleteMapping("delete/users/{userId}")
     public ResponseEntity<String> deleteAccount(@PathVariable int userId){
         return userService.deleteAccount(userId);
