@@ -4,7 +4,7 @@ import Home from "./views/Home";
 import Login from './views/Login';
 import Signup from './views/Signup';
 import Profile from './views/Profile';
-import Quiz from './views/Quiz';
+import Inventory from './views/Inventory';
 import Search from './views/Search';
 import Header from './components/Header';
 
@@ -12,7 +12,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const sections = [
-    { title: 'Quiz', url: '/quiz' },
+    { title: 'Inventory', url: '/inventory' },
     { title: 'Search', url: '/search' },
     { title: 'Login', url: '/login' },
     { title: 'Signup', url: '/signup' },
@@ -29,7 +29,7 @@ const App = () => {
       <Header title="Mixer" sections={sections} loggedIn={loggedIn} />
       <Switch>
         <Route exact path="/"><Home /></Route>
-        <Route path="/quiz"><Quiz /></Route>
+        <Route path="/inventory"><Inventory loggedIn={loggedIn}/></Route>
         <Route path="/search"><Search /></Route>
         <Route path="/login"><Login setLoggedIn={setLoggedIn} /></Route>
         <Route path="/signup"><Signup /></Route>
