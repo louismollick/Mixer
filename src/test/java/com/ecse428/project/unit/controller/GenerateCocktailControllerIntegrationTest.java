@@ -92,18 +92,22 @@ public class GenerateCocktailControllerIntegrationTest {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
     }
 
+    @Test
+    @WithMockUser
     public void queryCocktailByAlcoholType() throws Exception{
         String uri_req = "/api/cocktail";
         Alcohol vodka = new Alcohol("Vodka");
         Modifier redBull = new Modifier("RedBull", Modifier.ModifierType.SODA);
         List<Alcohol> alcohols = Arrays.asList(vodka);
         List<Modifier> modifiers = Arrays.asList(redBull);
-        
+        List<String> tasteType = Arrays.asList("");
+        List<String> alcoholList = Arrays.asList("Vodka");
+        List<String> modifierList = Arrays.asList("RedBull");
         Cocktail vodka_redBull = new Cocktail("Vodka RedBull", alcohols, modifiers);
         List<Cocktail> allCocktails = Arrays.asList(vodka_redBull);
         
-        given(cocktailService.getCocktailByParams(alcohols)).willReturn(allCocktails);
-        mvc.perform(MockMvcRequestBuilders.delete(uri_req))
+        given(cocktailService.getCocktailByParams("",alcoholList,modifierList,tasteType,"","")).willReturn(allCocktails);
+        mvc.perform(MockMvcRequestBuilders.post(uri_req))
                 .andExpect(status().isOk());
     }
 }
