@@ -3,6 +3,7 @@ package com.ecse428.project.service;
 import java.util.Set;
 
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
 
@@ -27,5 +28,8 @@ public interface UserService {
 
     public ResponseEntity<String> deleteAccount(long userId);
 
+    public Set<Cocktail> getFavouriteCocktail(long userId);
+
+    public ResponseEntity<String> putFavouriteCocktail(long userId, String cocktailName);
 
 }

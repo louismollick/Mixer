@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Set;
 
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.service.UserService;
 
@@ -46,6 +47,16 @@ public class UserController {
     @PutMapping("alcohol/{alcoholName}")
     public ResponseEntity<String> putAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName) {
         return userService.putAlcoholInInventory(userId, alcoholName);
+    }
+
+    @GetMapping("favouriteCocktail")
+    public Set<Cocktail> getFavouriteCocktails(@PathVariable int userId) {
+        return userService.getFavouriteCocktail(userId);
+    }
+
+    @PutMapping("favouriteCocktail/{cocktailName}")
+    public ResponseEntity<String> putFavouriteCocktail(@PathVariable int userId, @PathVariable String cocktailName) {
+        return userService.putFavouriteCocktail(userId, cocktailName);
     }
 
     @DeleteMapping("alcohol/{alcoholName}")

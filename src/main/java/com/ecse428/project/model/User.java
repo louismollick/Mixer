@@ -49,6 +49,10 @@ public class User {
     @JoinTable(name = "user_modifiers", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "modifier_name"))
     private Set<Modifier> modifiersInInventory;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_favouriteCocktails", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "cocktail_name"))
+    private Set<Cocktail> favouriteCocktails;
+
     public User() {
     }
 
@@ -57,6 +61,7 @@ public class User {
         this.password = password;
         this.alcoholInInventory = new HashSet<Alcohol>();
         this.modifiersInInventory = new HashSet<Modifier>();
+        this.favouriteCocktails = new HashSet<Cocktail>();
     }
 
     public User(Long id, String email, String password, Set<Alcohol> alcoholInInventory,
@@ -116,6 +121,18 @@ public class User {
         this.modifiersInInventory.add(chosenModifier);
     }
 
+    public Set<Cocktail> getFavouriteCocktails() {
+        return this.favouriteCocktails;
+    }
+
+    public void setFavouriteCocktails(Set<Cocktail> favouriteCocktails) {
+        this.favouriteCocktails = favouriteCocktails;
+    }
+
+    public void addFavouriteCocktail(Cocktail chosenCocktail) {
+        this.favouriteCocktails.add(chosenCocktail);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -137,8 +154,8 @@ public class User {
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", email='" + getEmail() + "'" + ", password='" + getPassword() + "'"
-                + ", alcoholInInventory='" + getAlcoholInInventory() + "'" + ", modifiersInInventory='"
-                + getModifiersInInventory() + "'" + "}";
+        + ", alcoholInInventory='" + getAlcoholInInventory() + "'" + ", modifiersInInventory='"
+        + getModifiersInInventory() + "'"  + ", favouriteCocktails='" + getFavouriteCocktails() + "'" + "}";
     }
 
 
