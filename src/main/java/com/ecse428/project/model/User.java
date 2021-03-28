@@ -69,6 +69,7 @@ public class User {
         this.password = password;
         this.alcoholInInventory = alcoholInInventory;
         this.modifiersInInventory = modifiersInInventory;
+        this.favouriteCocktails = new HashSet<Cocktail>();
     }
 
     public Long getId() {
