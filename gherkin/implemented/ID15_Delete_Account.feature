@@ -7,19 +7,15 @@ Feature: Delete Account
 
   Background: The user is in the database and logged in
   
-  Given I am signed up for Mixer
-  And I am logged into my account
+  Given I am a signed up for Mixer
+  Given I am logged in to Mixer
   
   Scenario: User successfully deletes their account (Success Flow)
 
-  When I press the delete button
-  Then my information is deleted
-  And I am no longer a user
-  And I am redirected to the login page
+  When I request to delete my account
+  Then I will no longer be a user
 
-  Scenario: Delete account unsuccessfull (Error Flow)
+  Scenario: Delete account unsuccessful (Error Flow)
 
-  When I press the delete button
-  Then my information is not deleted
-  And I am still a user 
-  And I am not redirected to the login page
+    When I request to delete somebody else's account
+    Then that account will not be deleted
