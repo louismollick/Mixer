@@ -13,28 +13,14 @@ Feature: Remove Modifier From Inventory
    Scenario: Remove a valid modifier from inventory (Success Flow)
 
       When I select a modifier
-<<<<<<< HEAD:gherkin/implemented/ID08_Remove_Modifier.feature
       And the modifier exists in my inventory
       And I confirm removing the modifier from inventory
       Then the system will remove the modifier from my inventory
-=======
-      And I confirm removing it from my inventory
-      And The modifier exists in my inventory
-      Then The system will remove the modifier from my inventory
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a:gherkin/groomed/ID08_Remove_Modifier.feature
 
    Scenario: Modifier does not exist in inventory (Error Case)
 
       When I select a modifier
-<<<<<<< HEAD:gherkin/implemented/ID08_Remove_Modifier.feature
       And the modifier does not exist in my inventory
       And I confirm removing the modifier from inventory
       Then the system will display an error about the modifier
       And no item will be removed
-=======
-      And I confirm removing it from my inventory
-      And The modifier does not exist in my inventory
-      Then The system will display an error
-
-
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a:gherkin/groomed/ID08_Remove_Modifier.feature

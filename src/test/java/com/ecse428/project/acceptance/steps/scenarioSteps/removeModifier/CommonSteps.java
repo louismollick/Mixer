@@ -41,7 +41,7 @@ public class CommonSteps {
 
     context.setResponse(restTemplate.exchange(uri_req, HttpMethod.DELETE, null, String.class, params));
   }
-
+/*
   @When("I select a modifier")
   public void i_select_a_modifier() {
     ResponseEntity<Modifier[]> response = restTemplate.getForEntity("/api/modifier", Modifier[].class);
@@ -50,7 +50,7 @@ public class CommonSteps {
     // Select one
     context.setChosenModifier(response.getBody()[0]);
     assertNotNull(context.getChosenModifier());
-  }
+  }*/
 
   @Then("no item will be removed")
   public void no_item_will_be_removed() {
