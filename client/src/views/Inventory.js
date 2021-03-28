@@ -18,23 +18,16 @@ const Inventory = ({ loggedIn }) => {
       return;
     }
 
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-    if (!userId || !token) {
-      setLoading(false);
-      setError(true);
-      return;
-    }
+    const userId = window.localStorage.getItem('userId');
+    const token = window.localStorage.getItem('token');
+
     try {
       const reqAlcohol = axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}/alcohol`, {
         headers: {
           'Authorization': `${token}`
         }
       })
-        .then(res => {
-          console.log(res.data)
-          setAlcohols(res.data);
-        })
+        .then(res => setAlcohols(res.data))
         .catch(err => {
           throw err
         });
@@ -43,10 +36,7 @@ const Inventory = ({ loggedIn }) => {
           'Authorization': `${token}`
         }
       })
-        .then(res => {
-          console.log(res.data)
-          setModifiers(res.data);
-        })
+        .then(res => setModifiers(res.data))
         .catch(err => {
           throw err
         });
@@ -74,7 +64,7 @@ const Inventory = ({ loggedIn }) => {
                 Please login to view your inventory
               </Typography>
               <Box display="flex" alignItems="center" justifyContent="center" >
-                <Button variant="contained" color="primary" component={Link} to={'/login'}>Login</Button>
+                <Button id="loginBtn" variant="contained" color="primary" component={Link} to={'/login'}>Login</Button>
               </Box>
             </>
           );

@@ -64,7 +64,6 @@ const Login = ({ setLoggedIn }) => {
       password
     }).then(res => {
       if (res.status === 200) {
-        console.log("HERE:", res);
         window.localStorage.setItem('token', res.data.token);
         window.localStorage.setItem('email', res.data.email);
         window.localStorage.setItem('userId', res.data.userId);
@@ -78,7 +77,7 @@ const Login = ({ setLoggedIn }) => {
         if (e.response.status === 403)
           setShowLoginError(true);
         else {
-          console.error(e);
+          //console.error(e);
           setShowError(true);
         }
       })
@@ -106,7 +105,7 @@ const Login = ({ setLoggedIn }) => {
           <Typography component="h1" variant="h5">
             Login
         </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <form id="form" className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

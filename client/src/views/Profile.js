@@ -20,6 +20,11 @@ const Profile = ({ loggedIn, setLoggedIn }) => {
       pathname: "/",
       state: { redirect: 'logout' }
     }} />;
+  
+  if (!loggedIn)
+    return <Typography component="h1" variant="h5" align="center">
+      Please login to see your profile.
+  </Typography>
 
   return (
     <div>
