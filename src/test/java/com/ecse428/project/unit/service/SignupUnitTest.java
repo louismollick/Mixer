@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import com.ecse428.project.model.User;
 import com.ecse428.project.repository.AlcoholRepository;
+import com.ecse428.project.repository.CocktailRepository;
 import com.ecse428.project.repository.ModifierRepository;
 import com.ecse428.project.repository.UserRepository;
 import com.ecse428.project.service.IUserService;
@@ -35,6 +36,9 @@ public class SignupUnitTest {
 
     @MockBean
     private ModifierRepository m;
+
+    @MockBean
+    private CocktailRepository c;
 
     @MockBean
     private BCryptPasswordEncoder b;
