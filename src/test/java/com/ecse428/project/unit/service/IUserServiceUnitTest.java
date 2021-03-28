@@ -3,6 +3,7 @@ package com.ecse428.project.unit.service;
 import static org.junit.Assert.assertFalse;
 
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.repository.CocktailRepository;
 import com.ecse428.project.repository.ModifierRepository;
 import com.ecse428.project.model.User;
 import com.ecse428.project.model.Alcohol;
@@ -35,6 +36,9 @@ public class IUserServiceUnitTest {
 
     @MockBean
     private ModifierRepository modifierRepository;
+
+    @MockBean
+    private CocktailRepository cocktailRepository;
 
     @MockBean
     private AlcoholRepository a;
