@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.createAccount;
+package com.ecse428.project.acceptance.steps.scenarioSteps.CreateAccount;
 
 import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.model.User;
