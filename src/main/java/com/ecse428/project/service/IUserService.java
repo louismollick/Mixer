@@ -156,7 +156,7 @@ public class IUserService implements UserService {
             return ResponseEntity.status(HttpStatus.OK).body("Cocktail already in favourites.");
         }
 
-        // Add modifier to user's modifiersInInventory
+        // Add cocktail to user's favourite cocktails in database
         user.get().getFavouriteCocktails().add(cocktail.get());
 
         // Save user
@@ -231,6 +231,29 @@ public class IUserService implements UserService {
         //Delete user
         userRepository.delete(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted " + userId + ".");
+    }
+
+    @Override
+    public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName) {
+         // Find user in database
+         Optional<User> user = userRepository.findById(userId);
+         if (!user.isPresent()) {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+         }
+ 
+         // Find cocktail in database
+         Optional<Cocktail> cocktail = cocktailRepository.findByName(cocktailName);
+         if (!cocktail.isPresent()) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                     .body("Cocktail not found with name " + cocktailName + ".");
+         }
+         // Delete cocktail in database
+         user.get().getFavouriteCocktails().remove(cocktail.get());
+ 
+         // Save the user
+         userRepository.save(user.get());
+ 
+         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + cocktailName + ".");
     }
 
 }

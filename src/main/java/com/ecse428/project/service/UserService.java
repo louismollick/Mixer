@@ -30,4 +30,6 @@ public interface UserService {
 
     public ResponseEntity<String> putFavouriteCocktail(long userId, String cocktailName);
 
+    public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName);
+
 }
