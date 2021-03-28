@@ -3,12 +3,11 @@ package com.ecse428.project.service;
 import java.util.Set;
 
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 public interface UserService {
     public Set<Modifier> getModifiersInInventory(long userId);
@@ -27,5 +26,10 @@ public interface UserService {
 
     public ResponseEntity<String> deleteAccount(long userId);
 
+    public Set<Cocktail> getFavouriteCocktail(long userId);
+
+    public ResponseEntity<String> putFavouriteCocktail(long userId, String cocktailName);
+
+    public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName);
 
 }

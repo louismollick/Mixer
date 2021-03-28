@@ -8,9 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
+
+    Optional<Cocktail> findByName(String name);
 
     @Query("SELECT c FROM Cocktail c WHERE UPPER(c.name) LIKE UPPER(concat('%', ?1,'%'))")
     List<Cocktail> findByNameContaining(String cocktailName);

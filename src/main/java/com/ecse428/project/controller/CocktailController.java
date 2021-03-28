@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.service.CocktailService;
+import com.ecse428.project.service.ICocktailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +16,7 @@ public class CocktailController {
     private final CocktailService cocktailService;
 
     @Autowired
-    public CocktailController(CocktailService cocktailService) {
+    public CocktailController(ICocktailService cocktailService){
         this.cocktailService = cocktailService;
     }
 

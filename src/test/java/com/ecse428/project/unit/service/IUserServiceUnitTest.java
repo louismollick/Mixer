@@ -2,15 +2,14 @@ package com.ecse428.project.unit.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
 
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.repository.CocktailRepository;
 import com.ecse428.project.repository.ModifierRepository;
-import com.ecse428.project.service.IModifierService;
 import com.ecse428.project.model.User;
 import com.ecse428.project.model.Alcohol;
-import com.ecse428.project.service.ModifierService;
-import org.junit.Before;
+import com.ecse428.project.model.Cocktail;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,13 +19,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.ecse428.project.model.User;
 import com.ecse428.project.repository.AlcoholRepository;
 import com.ecse428.project.repository.UserRepository;
 import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.mockito.BDDMockito.given;
 import java.util.*;
@@ -43,6 +39,9 @@ public class IUserServiceUnitTest {
 
     @MockBean
     private ModifierRepository modifierRepository;
+
+    @MockBean
+    private CocktailRepository cocktailRepository;
 
     @MockBean
     private AlcoholRepository a;
@@ -94,4 +93,41 @@ public class IUserServiceUnitTest {
         assertFalse(newUser.getAlcoholInInventory().contains(vodka));
     }
   
+    @Test
+    public void removeFavouriteCocktail() {
+        long id = 22;
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
+        Set<Cocktail> favouriteCocktails = new HashSet<Cocktail>();
+        User newUser = new User(id,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
+        Cocktail mimosa = new Cocktail();
+        mimosa.setName("Mimosa");
+        favouriteCocktails.add(mimosa);
+        newUser.setFavouriteCocktails(favouriteCocktails);
+
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(cocktailRepository.findByName("Mimosa")).willReturn(Optional.of(mimosa));
+
+        userService.deleteFavouriteCocktail(id, "Mimosa");
+        assertFalse(newUser.getFavouriteCocktails().contains(mimosa));
+    }
+
+    @Test
+    public void addFavouriteCocktail() {
+        long id = 22;
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
+        Set<Cocktail> favouriteCocktails = new HashSet<Cocktail>();
+        User newUser = new User(id,"test@gmail.com","888888", alcoholInInventory, modifiersInInventory);
+        Cocktail sangria = new Cocktail();
+        sangria.setName("Sangria");
+        favouriteCocktails.add(sangria);
+        newUser.setFavouriteCocktails(favouriteCocktails);
+
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(cocktailRepository.findByName("Sangria")).willReturn(Optional.of(sangria));
+
+        userService.putFavouriteCocktail(id, "Sangria");
+        assertTrue(newUser.getFavouriteCocktails().contains(sangria));
+    }
 }

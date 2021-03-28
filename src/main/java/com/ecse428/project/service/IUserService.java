@@ -4,9 +4,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
 import com.ecse428.project.repository.AlcoholRepository;
+import com.ecse428.project.repository.CocktailRepository;
 import com.ecse428.project.repository.ModifierRepository;
 import com.ecse428.project.repository.UserRepository;
 
@@ -30,14 +32,19 @@ public class IUserService implements UserService {
     private AlcoholRepository alcoholRepository;
 
     @Autowired
+    private CocktailRepository cocktailRepository;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public IUserService(UserRepository userRepository, ModifierRepository modifierRepository,
-            AlcoholRepository alcoholRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+            AlcoholRepository alcoholRepository, CocktailRepository cocktailRepository, 
+            BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modifierRepository = modifierRepository;
         this.alcoholRepository = alcoholRepository;
+        this.cocktailRepository = cocktailRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -121,6 +128,44 @@ public class IUserService implements UserService {
     }
 
     @Override
+    public Set<Cocktail> getFavouriteCocktail(long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+        return user.get().getFavouriteCocktails();
+    }
+
+    @Override
+    public ResponseEntity<String> putFavouriteCocktail(long userId, String cocktailName) {
+        // Find user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+
+        // Find cocktail in database
+        Optional<Cocktail> cocktail = cocktailRepository.findByName(cocktailName);
+        if (!cocktail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Cocktail not found with name " + cocktailName + ".");
+        }
+
+        // Let the user know if it's already in their favourites
+        if (user.get().getFavouriteCocktails().contains(cocktail.get())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Cocktail already in favourites.");
+        }
+
+        // Add cocktail to user's favourite cocktails in database
+        user.get().getFavouriteCocktails().add(cocktail.get());
+
+        // Save user
+        userRepository.save(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully added " + cocktailName + ".");
+    }
+
+    @Override
     public ResponseEntity<String> postSignup(User user) {
         if (userRepository.existsByEmail(user.getEmail()))
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already taken.");
@@ -186,6 +231,29 @@ public class IUserService implements UserService {
         //Delete user
         userRepository.delete(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted.");
+    }
+
+    @Override
+    public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName) {
+         // Find user in database
+         Optional<User> user = userRepository.findById(userId);
+         if (!user.isPresent()) {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+         }
+ 
+         // Find cocktail in database
+         Optional<Cocktail> cocktail = cocktailRepository.findByName(cocktailName);
+         if (!cocktail.isPresent()) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                     .body("Cocktail not found with name " + cocktailName + ".");
+         }
+         // Delete cocktail in database
+         user.get().getFavouriteCocktails().remove(cocktail.get());
+ 
+         // Save the user
+         userRepository.save(user.get());
+ 
+         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + cocktailName + ".");
     }
 
 }

@@ -4,9 +4,14 @@ import java.util.*;
 
 import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.ModifierController;
+import com.ecse428.project.controller.UserController;
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.model.User;
+import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier.ModifierType;
 import com.ecse428.project.service.IModifierService;
+import com.ecse428.project.service.IUserService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,32 +31,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ModifierController.class)
-public class ModifierControllerIntegrationTest {
+@WebMvcTest(UserController.class)
+
+
+public class FavouriteCocktailIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private IModifierService service;
+    private IUserService userService;
 
     @MockBean
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @WithMockUser
-    public void givenModifiers_whenGetModifiers_thenReturnJsonArray() throws Exception {
-        Modifier redBull = new Modifier("Red Bull", ModifierType.SMOOTHING_AGENT);
+    public void givenFavouriteCocktails_whenAddFavouriteCocktails_thenReturnNewJsonArray() throws Exception {
+        long id = 44;
+  
+        Set<Alcohol> alcoholsInInventory = new HashSet<Alcohol>();
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Cocktail> favouriteCocktails = new HashSet<Cocktail>();
+        User newUser = new User(id,"user@gmail.com","123456789", alcoholsInInventory, modifiersInInventory);
+        newUser.setFavouriteCocktails(favouriteCocktails);
 
-        List<Modifier> allModifiers = Arrays.asList(redBull);
+        given(userService.getFavouriteCocktail(id)).willReturn(favouriteCocktails);
 
-        given(service.getModifiers()).willReturn(allModifiers);
-
-        mvc.perform(MockMvcRequestBuilders
-                .get("/api/modifier")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(redBull.getName())));
+        String uri_req = "/api/user/"+ id +"/favouriteCocktail/Mimosa"; 
+        mvc.perform(MockMvcRequestBuilders.put(uri_req))
+                .andExpect(status().isOk());
     }
 }
