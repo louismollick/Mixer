@@ -8,6 +8,7 @@ import com.ecse428.project.controller.UserController;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier.ModifierType;
 import com.ecse428.project.service.IModifierService;
 import com.ecse428.project.service.IUserService;
@@ -62,5 +63,14 @@ public class ModifierControllerDeleteIntegrationTest {
         String uri_req = "/api/user/"+ num +"/modifier/Madiera";
         mvc.perform(MockMvcRequestBuilders.delete(uri_req))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    public void unfavoriteCocktail() throws Exception {
+        long num = 45;
+        Set<Modifier> modifiersInInventory = new HashSet<Modifier>();
+        Set<Alcohol> alcoholInInventory = new HashSet<Alcohol>();
+        User newUser = new User(num,"newUser@gmail.com","abcdefg", alcoholInInventory, modifiersInInventory);
     }
 }
