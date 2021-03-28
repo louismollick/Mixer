@@ -1,6 +1,5 @@
 package com.ecse428.project.controller;
 
-import com.ecse428.project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Set;
 
 import com.ecse428.project.model.Alcohol;
+import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
 
 
 @RestController
 @RequestMapping(path = "api/user/{userId}")
 public class UserController {
+    private final IUserService userService;
 
     @Autowired
-    private final UserService userService;
-
-    public UserController(UserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 
@@ -48,6 +48,16 @@ public class UserController {
         return userService.putAlcoholInInventory(userId, alcoholName);
     }
 
+    @GetMapping("favouriteCocktail")
+    public Set<Cocktail> getFavouriteCocktails(@PathVariable int userId) {
+        return userService.getFavouriteCocktail(userId);
+    }
+
+    @PutMapping("favouriteCocktail/{cocktailName}")
+    public ResponseEntity<String> putFavouriteCocktail(@PathVariable int userId, @PathVariable String cocktailName) {
+        return userService.putFavouriteCocktail(userId, cocktailName);
+    }
+
     @DeleteMapping("alcohol/{alcoholName}")
     public ResponseEntity<String> deleteAlcoholInInventory(@PathVariable int userId, @PathVariable String alcoholName){
         return userService.deleteAlcoholInInventory(userId, alcoholName);
@@ -56,6 +66,11 @@ public class UserController {
     @DeleteMapping("modifier/{modifierName}")
     public ResponseEntity<String> deleteModifierInInventory(@PathVariable int userId, @PathVariable String modifierName){
         return userService.deleteModifierInInventory(userId, modifierName);
+    }
+
+    @DeleteMapping("favouriteCocktail/{cocktailName}")
+    public ResponseEntity<String> deleteFavouriteCocktail(@PathVariable int userId, @PathVariable String cocktailName){
+        return userService.deleteFavouriteCocktail(userId, cocktailName);
     }
 
     @DeleteMapping("delete/users/{userId}")
