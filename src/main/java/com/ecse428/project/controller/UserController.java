@@ -14,17 +14,17 @@ import java.util.Set;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
+import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
 
 
 @RestController
 @RequestMapping(path = "api/user/{userId}")
 public class UserController {
+    private final IUserService userService;
 
     @Autowired
-    private final UserService userService;
-
-    public UserController(UserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 
