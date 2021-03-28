@@ -181,11 +181,11 @@ public class IUserService implements UserService {
         //Find the user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id.");
         }
         //Delete user
         userRepository.delete(user.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted " + userId + ".");
+        return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted.");
     }
 
 }
