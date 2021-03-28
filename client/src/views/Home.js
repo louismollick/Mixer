@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
@@ -29,18 +28,11 @@ const Home = () => {
     setFunc(false);
   };
 
-=======
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-
-const Home = () => {
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a
   return (
     <div>
       <Typography component="h1" variant="h5" align="center">
         Welcome to mixer, the best cocktail generator on the internet
       </Typography>
-<<<<<<< HEAD
       <Snackbar open={showLoginSuccess} autoHideDuration={6000} onClose={handleClose(setShowLoginSuccess)}>
         <Alert onClose={handleClose(setShowLoginSuccess)} severity="success">
           Successfully logged in!
@@ -51,8 +43,6 @@ const Home = () => {
           Successfully logged out.
         </Alert>
       </Snackbar>
-=======
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a
     </div>
   )
 };

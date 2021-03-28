@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useLocation } from 'react-router-dom';
-=======
-import React from 'react';
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-<<<<<<< HEAD
 const notLoggedInPaths = ['/login', '/signup'];
 const loggedInPaths = ['/profile'];
 
@@ -38,16 +33,6 @@ const Header = ({ sections, title, loggedIn }) => {
 
   return (isVisible &&
     <>
-=======
-const Header = (props) => {
-  const classes = useStyles();
-  const { sections, title, location } = props;
-
-  const isVisible = location.pathname !== '/login';
-
-  return ( isVisible &&
-    <React.Fragment>
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a
       <Toolbar className={classes.toolbar}>
         <Typography
           component="h2"
@@ -61,7 +46,6 @@ const Header = (props) => {
         </Typography>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-<<<<<<< HEAD
         {sections
           .filter(section => loggedIn ? !notLoggedInPaths.includes(section.url) : !loggedInPaths.includes(section.url))
           .map((section) => (
@@ -78,22 +62,6 @@ const Header = (props) => {
           ))}
       </Toolbar>
     </>
-=======
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            className={classes.toolbarLink}
-          >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar>
-    </React.Fragment>
->>>>>>> d74778c977703d835693f41c376bc3caa59fee2a
   );
 }
 
