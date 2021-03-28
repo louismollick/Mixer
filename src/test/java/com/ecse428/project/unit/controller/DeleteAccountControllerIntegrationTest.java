@@ -2,6 +2,7 @@ package com.ecse428.project.unit.controller;
 
 import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.AuthController;
+import com.ecse428.project.controller.UserController;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(AuthController.class)
+@WebMvcTest(UserController.class)
 public class DeleteAccountControllerIntegrationTest {
 
     @Autowired
@@ -42,42 +44,21 @@ public class DeleteAccountControllerIntegrationTest {
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
+    @WithMockUser
     public void givenValidID_whenDeleteAccount_thenSuccess() throws Exception {
+        given(service.deleteAccount(54)).willReturn(ResponseEntity.status(HttpStatus.OK).body("Successfully deleted."));
 
-        long id = 53;
-        Set<Modifier> modifiers = new HashSet<Modifier>();
-        Set<Alcohol> alcohols = new HashSet<Alcohol>();
-        String email = "sample.email@gmail.com";
-        User newUser = new User(id,email, "987654321", alcohols, modifiers);
-
-        service.postSignup(newUser);
-
-        given(service.deleteAccount(id)).willReturn(ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted."));
-
-        mvc.perform(MockMvcRequestBuilders.delete("/delete/users")
-                .content(String.format("{\"userId\":\"%s\"}", "53"))
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-                .andExpect(content().string("Succesfully deleted."));
+        mvc.perform(MockMvcRequestBuilders.delete("/api/user/44/delete/users/54"))
+                .andExpect(status().isOk());
     }
 
     @Test
+    @WithMockUser
     public void givenInvalidID_whenDeleteAccount_thenError() throws Exception {
+        given(service.deleteAccount(53)).willReturn(ResponseEntity.status(HttpStatus.resolve(400)).body("User not found with id."));
 
-        long id = 53;
-        Set<Modifier> modifiers = new HashSet<Modifier>();
-        Set<Alcohol> alcohols = new HashSet<Alcohol>();
-        String email = "sample.email@gmail.com";
-        User newUser = new User(id,email, "987654321", alcohols, modifiers);
-
-
-
-        given(service.deleteAccount(id)).willReturn(ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted."));
-
-        mvc.perform(MockMvcRequestBuilders.delete("/delete/users")
-                .content(String.format("{\"userId\":\"%s\"}", "53"))
+        mvc.perform(MockMvcRequestBuilders.delete("/api/user/53/delete/users/53")
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
                 .andExpect(content().string("User not found with id."));
     }
-
-
 }
