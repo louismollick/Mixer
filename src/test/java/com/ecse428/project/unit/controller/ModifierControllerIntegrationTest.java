@@ -4,13 +4,9 @@ import java.util.*;
 
 import com.ecse428.project.auth.UserDetailsServiceImpl;
 import com.ecse428.project.controller.ModifierController;
-import com.ecse428.project.controller.UserController;
 import com.ecse428.project.model.Modifier;
-import com.ecse428.project.model.User;
-import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier.ModifierType;
 import com.ecse428.project.service.IModifierService;
-import com.ecse428.project.service.IUserService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
