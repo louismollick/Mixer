@@ -10,6 +10,7 @@ import com.ecse428.project.model.User;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,6 +25,8 @@ import com.ecse428.project.repository.UserRepository;
 import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
+
 import static org.mockito.BDDMockito.given;
 import java.util.*;
 
@@ -129,5 +132,18 @@ public class IUserServiceUnitTest {
 
         userService.putFavouriteCocktail(id, "Sangria");
         assertTrue(newUser.getFavouriteCocktails().contains(sangria));
+    }
+
+    @Test
+    public void deleteAccount() {
+        long id = 53;
+        Set<Modifier> modifiers = new HashSet<Modifier>();
+        Set<Alcohol> alcohols = new HashSet<Alcohol>();
+        String email = "sample.email@gmail.com";
+        User newUser = new User(id,email, "987654321", alcohols, modifiers);
+
+        given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        userService.deleteAccount(newUser.getId());
+        Assert.assertNotNull(userRepository.findById(id));
     }
 }
