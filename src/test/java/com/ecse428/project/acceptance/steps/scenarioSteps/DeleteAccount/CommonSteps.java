@@ -49,16 +49,16 @@ public class CommonSteps {
     public void i_will_no_longer_be_a_user() {
 //        User dbUser = userRepository.findByEmail(TestContext.valid_email).get();
 //        assertNull(dbUser);
-        System.out.println("Wow this is passing too!");
+        System.out.println("");
     }
 
     @When("I request to delete somebody else's account")
     public void i_request_to_delete_somebody_else_account() {
-        System.out.println("No way this passed!");
+        System.out.println("");
     }
 
     @Then("that account will not be deleted")
     public void account_not_deleted() {
-        System.out.println("Holy %#&$!");
+        System.out.println("");
     }
 }
