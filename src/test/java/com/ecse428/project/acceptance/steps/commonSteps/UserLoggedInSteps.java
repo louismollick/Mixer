@@ -33,7 +33,7 @@ public class UserLoggedInSteps extends CucumberConfig {
   @Autowired
   UserRepository userRepository;
 
-  @Given("I am a signed up for Mixer")
+  @Given("I am signed up for Mixer")
   @Given("my email is already linked to an account")
   public void i_am_a_user() {
     // Create user and persist

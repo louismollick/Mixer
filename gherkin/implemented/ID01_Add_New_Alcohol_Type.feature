@@ -7,7 +7,7 @@ Feature: Add Alcohol New Type To Inventory
 
     Background: User is logged in
 
-        Given I am a signed up for Mixer
+        Given I am signed up for Mixer
         And I am logged in to Mixer
 
     Scenario: Valid alcohol type added (Success Flow)

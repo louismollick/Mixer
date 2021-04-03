@@ -32,39 +32,6 @@ public class RemoveValidAlcoholTypeSteps extends CucumberConfig  {
     @Autowired
     UserRepository userRepository;
 
-    /*
-    @And("I have an alcohol in my inventory")
-    public void i_have_alcohol_in_inventory() {
-        final String uri_req = "/api/user/{userId}/alcohol/";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", context.getUser().getId().toString());
-
-        restTemplate.exchange(uri_req, HttpMethod.GET, null, Alcohol[].class, params);
-
-        ResponseEntity<Alcohol[]> response = restTemplate.getForEntity("/api/alcohol", Alcohol[].class);
-        context.setChosenAlcohol(response.getBody()[0]);
-    }
-
-    @And("I have a modifier in my inventory")
-    public void i_have_modifier_in_inventory() {
-        final String uri_req = "/api/user/{userId}/modifier/";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("userId", context.getUser().getId().toString());
-
-        restTemplate.exchange(uri_req, HttpMethod.GET, null, Modifier[].class, params);
-
-        ResponseEntity<Modifier[]> response = restTemplate.getForEntity("/api/modifier", Modifier[].class);
-        context.setChosenModifier(response.getBody()[0]);
-    }
-
-    @And("I have items in my inventory")
-    public void i_have_items_in_inventory() {
-        i_have_alcohol_in_inventory();
-        i_have_modifier_in_inventory();
-    }
-    */
-
-
     @When("the alcohol type exists in inventory")
     public void the_alcohol_exists_in_inventory() {
         // Put in inventory

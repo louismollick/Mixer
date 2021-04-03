@@ -1,4 +1,4 @@
-package com.ecse428.project.acceptance.steps.scenarioSteps.DeleteAccount;
+package com.ecse428.project.acceptance.steps.scenarioSteps.deleteAccount;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.ecse428.project.acceptance.TestContext;

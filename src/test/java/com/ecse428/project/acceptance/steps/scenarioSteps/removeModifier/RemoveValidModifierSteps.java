@@ -32,8 +32,6 @@ public class RemoveValidModifierSteps extends CucumberConfig  {
     @Autowired
     UserRepository userRepository;
 
-
-
     @When("the modifier exists in my inventory")
     public void the_modifier_exists_in_inventory() {
         // Put in inventory

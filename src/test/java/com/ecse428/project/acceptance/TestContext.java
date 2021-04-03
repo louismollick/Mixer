@@ -1,5 +1,6 @@
 package com.ecse428.project.acceptance;
 
+import com.ecse428.project.acceptance.steps.scenarioSteps.loginWithCredentials.LoginCreds;
 import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
@@ -16,11 +17,13 @@ public class TestContext {
   public static String valid_email = "jimmy@hotmail.com";
   public static String valid_password = "12345678";
   public static String invalid_name = "Invalid Name";
+  public static String invalid_password = "87654321";
 
   private ResponseEntity<String> response;
   private Modifier chosenModifier;
   private Alcohol chosenAlcohol;
   private User user;
+  private LoginCreds logincreds;
 
   public ResponseEntity<String> getResponse() {
     return this.response;
@@ -52,5 +55,13 @@ public class TestContext {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public LoginCreds getLoginCreds() {
+    return this.logincreds;
+  }
+
+  public void setLoginCreds(LoginCreds logincreds) {
+    this.logincreds = logincreds;
   }
 }

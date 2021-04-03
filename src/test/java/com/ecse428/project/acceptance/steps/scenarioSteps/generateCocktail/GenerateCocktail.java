@@ -3,9 +3,7 @@ package com.ecse428.project.acceptance.steps.scenarioSteps.generateCocktail;
 import com.ecse428.project.acceptance.CucumberConfig;
 import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.model.Alcohol;
-import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
-import com.ecse428.project.model.User;
 import com.ecse428.project.repository.UserRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.But;
@@ -19,7 +17,6 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;

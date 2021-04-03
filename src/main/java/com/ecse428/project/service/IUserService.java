@@ -183,12 +183,11 @@ public class IUserService implements UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
         }
 
-        // Find alcohol in database
         Optional<Alcohol> alcohol = alcoholRepository.findByName(alcoholName);
         if (!alcohol.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Alcohol not found with name " + alcoholName + ".");
         }
-        // Delete alcohol in database
+        
         user.get().getAlcoholInInventory().remove(alcohol.get());
 
         // Save the user

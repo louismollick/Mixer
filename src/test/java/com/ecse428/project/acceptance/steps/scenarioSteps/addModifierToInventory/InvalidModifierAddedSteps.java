@@ -36,7 +36,7 @@ public class InvalidModifierAddedSteps extends CucumberConfig {
   UserRepository userRepository;
 
   @When("I select an invalid modifier")
-  public void i_select_a_modifier() {
+  public void i_select_an_invalid_modifier() {
     // Creating invalid modifier
     Modifier invaidModifier = new Modifier(TestContext.invalid_name, ModifierType.JUICE);
 

@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.ecse428.project.model.Alcohol;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-
 
 public class CommonSteps {
 
@@ -50,5 +51,10 @@ public class CommonSteps {
     // Select one
     context.setChosenAlcohol(response.getBody()[0]);
     assertNotNull(context.getChosenAlcohol());
+  }
+
+  @Then("no alcohol will be removed from my inventory")
+  public void no_alcohol_will_be_removed_from_my_inventory() {
+    assertTrue(context.getUser().getAlcoholInInventory().equals(userRepository.findByEmail(TestContext.valid_email).get().getAlcoholInInventory()));
   }
 }

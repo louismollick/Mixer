@@ -6,11 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 public class favouriteACocktailSteps {
 
-    @Given("^I am signed up for Mixer$")
-    public void i_am_signed_up_for_mixer() {
-        assertTrue(true);
-    }
-
     @And("^I am logged into my account$")
     public void i_am_logged_into_my_account() {
         assertTrue(true);

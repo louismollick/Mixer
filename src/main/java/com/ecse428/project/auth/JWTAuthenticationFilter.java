@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.ecse428.project.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -50,6 +51,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     try {
       User creds = new ObjectMapper().readValue(req.getInputStream(), User.class);
 
+      if (creds.getEmail() == null || creds.getEmail().isEmpty())
+        throw new BadCredentialsException("Email cannot be empty.", new MissingCredentialException());
+
+      if (creds.getPassword() == null || creds.getPassword().isEmpty())
+        throw new BadCredentialsException("Password cannot be empty.", new MissingCredentialException());
+
       return authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
     } catch (IOException e) {
@@ -71,5 +78,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     res.getWriter().write(
         new ObjectMapper().writeValueAsString(new TokenResponse(tokenStr, details.getUsername(), details.getUserId())));
     res.getWriter().flush();
+  }
+
+  @Override
+  public void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse res,
+      AuthenticationException failed) throws IOException, ServletException {
+    if (failed.getCause() instanceof MissingCredentialException)
+      res.getWriter().write(failed.getMessage());
+    else
+      res.getWriter().write("Invalid credentials. Please try again.");
+    res.setStatus(400);
+    res.getWriter().flush();
+  }
+
+  private class MissingCredentialException extends Throwable {
   }
 }

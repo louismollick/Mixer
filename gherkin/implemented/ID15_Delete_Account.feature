@@ -7,7 +7,7 @@ Feature: Delete Account
 
   Background: The user is in the database and logged in
   
-  Given I am a signed up for Mixer
+  Given I am signed up for Mixer
   Given I am logged in to Mixer
   
   Scenario: User successfully deletes their account (Success Flow)
