@@ -37,11 +37,16 @@ public class Cocktail {
     @ManyToMany
     private List<Alcohol> alcohols;
 
-    public Cocktail(){ }
+    public Cocktail() {
+    }
 
-    public void addAlcohol(Alcohol alcohol) { alcohols.add(alcohol); }
+    public void addAlcohol(Alcohol alcohol) {
+        alcohols.add(alcohol);
+    }
 
-    public void addModifier(Modifier modifier) { modifiers.add(modifier); }
+    public void addModifier(Modifier modifier) {
+        modifiers.add(modifier);
+    }
 
     public void setAlcohols(List<Alcohol> alcohols) {
         this.alcohols = alcohols;
@@ -51,7 +56,9 @@ public class Cocktail {
         this.name = name;
     }
 
-    public void setModifiers(List<Modifier> modifiers) { this.modifiers = modifiers; }
+    public void setModifiers(List<Modifier> modifiers) {
+        this.modifiers = modifiers;
+    }
 
     public String getName() {
         return name;
@@ -104,7 +111,8 @@ public class Cocktail {
         this.alcohols = alcohols;
     }
 
-    public Cocktail(String name, List<Modifier> modifiers, List<Alcohol> alcohols, Set<TasteType> tasteTypes, StrengthType strengthTypes, ServingSize servingSize) {
+    public Cocktail(String name, List<Modifier> modifiers, List<Alcohol> alcohols, Set<TasteType> tasteTypes,
+            StrengthType strengthTypes, ServingSize servingSize) {
         this.name = name;
         this.modifiers = modifiers;
         this.alcohols = alcohols;
@@ -112,4 +120,10 @@ public class Cocktail {
         this.strengthType = strengthTypes;
         this.servingSize = servingSize;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
 }

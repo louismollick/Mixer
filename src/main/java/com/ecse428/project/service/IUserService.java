@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class IUserService implements UserService {
@@ -39,7 +40,7 @@ public class IUserService implements UserService {
 
     @Autowired
     public IUserService(UserRepository userRepository, ModifierRepository modifierRepository,
-            AlcoholRepository alcoholRepository, CocktailRepository cocktailRepository, 
+            AlcoholRepository alcoholRepository, CocktailRepository cocktailRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modifierRepository = modifierRepository;
@@ -49,9 +50,9 @@ public class IUserService implements UserService {
     }
 
     public IUserService() {
-	}
+    }
 
-	@Override
+    @Override
     public Set<Modifier> getModifiersInInventory(long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -176,7 +177,7 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName){
+    public ResponseEntity<String> deleteAlcoholInInventory(long userId, String alcoholName) {
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -187,7 +188,7 @@ public class IUserService implements UserService {
         if (!alcohol.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Alcohol not found with name " + alcoholName + ".");
         }
-        
+
         user.get().getAlcoholInInventory().remove(alcohol.get());
 
         // Save the user
@@ -197,7 +198,7 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName){
+    public ResponseEntity<String> deleteModifierInInventory(long userId, String modifierName) {
         // Find user in database
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -220,39 +221,50 @@ public class IUserService implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> deleteAccount(long userId)
-    {
-        //Find the user in database
+    public ResponseEntity<String> deleteAccount(long userId) {
+        // Find the user in database
         Optional<User> user = userRepository.findById(userId);
-        if (!user.isPresent()) {
+        if (!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id.");
-        }
-        //Delete user
+
+        // Verify that not deleting someone else's account
+        String authEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long authUserId = userRepository.findByEmail(authEmail).get().getId();
+        if (Long.compare(authUserId, userId) != 0)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You cannot delete someone else's account.");
+
+        // Delete user
         userRepository.delete(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("Succesfully deleted.");
     }
 
     @Override
     public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName) {
-         // Find user in database
-         Optional<User> user = userRepository.findById(userId);
-         if (!user.isPresent()) {
-             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
-         }
- 
-         // Find cocktail in database
-         Optional<Cocktail> cocktail = cocktailRepository.findByName(cocktailName);
-         if (!cocktail.isPresent()) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                     .body("Cocktail not found with name " + cocktailName + ".");
-         }
-         // Delete cocktail in database
-         user.get().getFavouriteCocktails().remove(cocktail.get());
- 
-         // Save the user
-         userRepository.save(user.get());
- 
-         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + cocktailName + ".");
+        // Find user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+
+        // Find cocktail in database
+        Optional<Cocktail> cocktail = cocktailRepository.findByName(cocktailName);
+        if (!cocktail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Cocktail not found with name " + cocktailName + ".");
+        }
+
+        // Let the user know if it's not in their favourites
+        if (!user.get().getFavouriteCocktails().contains(cocktail.get())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Cocktail is not in favourites.");
+        }
+
+        // Delete cocktail in database
+        user.get().getFavouriteCocktails().remove(cocktail.get());
+
+        // Save the user
+        userRepository.save(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + cocktailName + ".");
     }
 
 }

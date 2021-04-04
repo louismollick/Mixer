@@ -24,8 +24,6 @@ public class RemoveInvalidAlcoholTypeSteps extends CucumberConfig  {
     @Autowired
     UserRepository userRepository;
 
-
-
     @When("the alcohol type does not exist in inventory")
     public void the_alcohol_type_does_not_exist_in_inventory() {
         // Put in inventory

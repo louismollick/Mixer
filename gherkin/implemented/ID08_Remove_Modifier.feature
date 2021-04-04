@@ -8,7 +8,7 @@ Feature: Remove Modifier From Inventory
    Background: User is logged in and has modifier item(s) in inventory
 
       Given I am signed up for Mixer
-      And I am logged in to Mixer
+      And I am logged into my account
 
    Scenario: Remove a valid modifier from inventory (Success Flow)
 

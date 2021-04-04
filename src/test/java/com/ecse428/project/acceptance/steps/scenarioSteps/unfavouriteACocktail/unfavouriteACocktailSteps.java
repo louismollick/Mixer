@@ -1,51 +1,55 @@
 package com.ecse428.project.acceptance.steps.scenarioSteps.unfavouriteACocktail;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.ecse428.project.acceptance.TestContext;
+import com.ecse428.project.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 public class unfavouriteACocktailSteps {
-    /*
-    @Given("^I am signed up for Mixer$")
-    public void iAmSignedUpForMixer() {
-        assertTrue(true);
-    }*/
+    @Autowired
+    private TestContext context;
 
-    /*
-    @And("^I am logged into my account$")
-    public void iAmLoggedIntoMyAccount() {
-        assertTrue(true);
-    }*/
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-    /*
-    @When("^I search a coctail$")
-    public void iSearchACoctail() {
-        assertTrue(true);
-    }*/
+    @Autowired
+    private UserRepository userRepository;
 
-    @And("^I unfavorite the cocktail$")
-    public void iUnfavoriteTheCocktail() {
-        assertTrue(true);
+    @When("I request to unfavorite the cocktail")
+    public void i_request_to_unfavorite_the_cocktail() {
+        // Send request
+        final String uri_req = "/api/user/{userId}/favouriteCocktail/{cocktailName}";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userId", context.getUser().getId().toString());
+        params.put("cocktailName", context.getSelectedCocktail());
+        context.setResponse(restTemplate.exchange(uri_req, HttpMethod.DELETE, null, String.class, params));
     }
 
-    @Then("^the coctail is removed from my favorites list$")
-    public void theCoctailIsRemovedFromMyFavoritesList() {
-        assertTrue(true);
+    @Then("the cocktail is removed from my favorites list")
+    public void the_cocktail_is_removed_from_my_favorites_list() {
+        // Check that the user's favorites list doesn't contain the selected Cocktail
+        // name
+        assertEquals(HttpStatus.OK, context.getResponse().getStatusCode());
+        assertFalse(userRepository.findByEmail(context.getUser().getEmail()).get().getFavouriteCocktails().toString()
+                .contains(context.getSelectedCocktail()));
     }
 
-    @And("^the cocktail is already not in my favorites list$")
-    public void theCocktailIsAlreadyNotInMyFavoritesList() {
-        assertTrue(true);
-    }
-
-    @Then("^the coctail is still not in my favorites list$")
-    public void theCoctailIsStillNotInMyFavoritesList() {
-        assertTrue(true);
-    }
-
-    @Then("^the coctail is not removed from my favorites list$")
-    public void theCoctailIsNotRemovedFromMyFavoritesList() {
-        assertTrue(true);
+    @Then("my cocktail favorites list has not changed")
+    public void my_cocktail_favorites_list_has_not_changed() {
+        var olduser = context.getUser();
+        var newuser = userRepository.findByEmail(olduser.getEmail()).get();
+        assertEquals(olduser.getFavouriteCocktails(), newuser.getFavouriteCocktails());
     }
 }

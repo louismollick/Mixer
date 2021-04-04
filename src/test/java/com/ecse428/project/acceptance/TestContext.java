@@ -24,6 +24,7 @@ public class TestContext {
   private Alcohol chosenAlcohol;
   private User user;
   private LoginCreds logincreds;
+  private String selectedCocktail;
 
   public ResponseEntity<String> getResponse() {
     return this.response;
@@ -63,5 +64,13 @@ public class TestContext {
 
   public void setLoginCreds(LoginCreds logincreds) {
     this.logincreds = logincreds;
+  }
+
+  public String getSelectedCocktail() {
+    return this.selectedCocktail;
+  }
+
+  public void setSelectedCocktail(String selectedCocktail) {
+    this.selectedCocktail = selectedCocktail;
   }
 }

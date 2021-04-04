@@ -8,7 +8,7 @@ Feature: Remove Alcohol Type From Inventory
     Background: User is logged in and has items in inventory
 
         Given I am signed up for Mixer
-        And I am logged in to Mixer
+        And I am logged into my account
 
     Scenario: Remove a valid alcohol type from inventory (Success Flow)
 

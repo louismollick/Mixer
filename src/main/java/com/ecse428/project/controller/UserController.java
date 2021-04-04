@@ -15,8 +15,6 @@ import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.service.IUserService;
-import com.ecse428.project.service.UserService;
-
 
 @RestController
 @RequestMapping(path = "api/user/{userId}")
@@ -73,7 +71,7 @@ public class UserController {
         return userService.deleteFavouriteCocktail(userId, cocktailName);
     }
 
-    @DeleteMapping("delete/users/{userId}")
+    @DeleteMapping("delete")
     public ResponseEntity<String> deleteAccount(@PathVariable int userId){
         return userService.deleteAccount(userId);
     }

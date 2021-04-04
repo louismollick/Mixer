@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RemoveInvalidModifierSteps extends CucumberConfig {
-
   @Autowired
   private TestContext context;
 
@@ -26,11 +25,12 @@ public class RemoveInvalidModifierSteps extends CucumberConfig {
   public void the_system_will_display_an_error() {
     assertEquals(HttpStatus.NOT_FOUND, context.getResponse().getStatusCode());
     assertTrue(context.getResponse().getBody().toString()
-    .contains("Modifier not found with name " + TestContext.invalid_name + "."));
+        .contains("Modifier not found with name " + TestContext.invalid_name + "."));
   }
 
   @Then("no modifier will be removed from my inventory")
   public void no_modifier_will_be_removed_from_my_inventory() {
-    assertTrue(context.getUser().getModifiersInInventory().equals(userRepository.findByEmail(TestContext.valid_email).get().getModifiersInInventory()));
+    assertTrue(context.getUser().getModifiersInInventory()
+        .equals(userRepository.findByEmail(TestContext.valid_email).get().getModifiersInInventory()));
   }
 }

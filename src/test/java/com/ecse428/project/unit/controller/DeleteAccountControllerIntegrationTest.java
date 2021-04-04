@@ -48,7 +48,7 @@ public class DeleteAccountControllerIntegrationTest {
     public void givenValidID_whenDeleteAccount_thenSuccess() throws Exception {
         given(service.deleteAccount(54)).willReturn(ResponseEntity.status(HttpStatus.OK).body("Successfully deleted."));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/user/44/delete/users/54"))
+        mvc.perform(MockMvcRequestBuilders.delete("/api/user/54/delete"))
                 .andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class DeleteAccountControllerIntegrationTest {
     public void givenInvalidID_whenDeleteAccount_thenError() throws Exception {
         given(service.deleteAccount(53)).willReturn(ResponseEntity.status(HttpStatus.resolve(400)).body("User not found with id."));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/user/53/delete/users/53")
+        mvc.perform(MockMvcRequestBuilders.delete("/api/user/53/delete")
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
                 .andExpect(content().string("User not found with id."));
     }

@@ -8,7 +8,7 @@ Feature: Set serving size of cocktail
 	Background: User is logged in and is asked to set cocktail serving size
 
 		Given I am signed up for Mixer
-		And I am logged in to Mixer
+		And I am logged into my account
 		And I am prompted to indicate my preferred cocktail serving size
 		And the options listed are
 			| individual | group |

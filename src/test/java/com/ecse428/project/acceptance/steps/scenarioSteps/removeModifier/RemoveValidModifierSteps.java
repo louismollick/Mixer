@@ -1,4 +1,5 @@
 package com.ecse428.project.acceptance.steps.scenarioSteps.removeModifier;
+
 import com.ecse428.project.acceptance.CucumberConfig;
 import com.ecse428.project.acceptance.TestContext;
 import com.ecse428.project.model.Modifier;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +20,7 @@ import java.util.Map;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class RemoveValidModifierSteps extends CucumberConfig  {
-    
+public class RemoveValidModifierSteps extends CucumberConfig {
     @Autowired
     private TestContext context;
 

@@ -92,5 +92,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   }
 
   private class MissingCredentialException extends Throwable {
+    private static final long serialVersionUID = 1L;
   }
 }

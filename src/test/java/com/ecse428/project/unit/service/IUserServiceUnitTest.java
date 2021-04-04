@@ -24,6 +24,10 @@ import com.ecse428.project.repository.AlcoholRepository;
 import com.ecse428.project.repository.UserRepository;
 import com.ecse428.project.service.IUserService;
 import com.ecse428.project.service.UserService;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,6 +55,12 @@ public class IUserServiceUnitTest {
 
     @MockBean
     private BCryptPasswordEncoder b;
+
+    @MockBean
+    private SecurityContext securityContext;
+
+    @MockBean
+    private Authentication authentication;
 
     @TestConfiguration
     static class IUserServiceTestContextConfiguration {
@@ -143,6 +153,11 @@ public class IUserServiceUnitTest {
         User newUser = new User(id,email, "987654321", alcohols, modifiers);
 
         given(userRepository.findById(id)).willReturn(Optional.of(newUser));
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(newUser));
+        given(securityContext.getAuthentication()).willReturn(authentication);
+        given(authentication.getPrincipal()).willReturn(email);
+        SecurityContextHolder.setContext(securityContext);
+
         userService.deleteAccount(newUser.getId());
         Assert.assertNotNull(userRepository.findById(id));
     }

@@ -20,7 +20,6 @@ import java.util.Map;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class RemoveValidAlcoholTypeSteps extends CucumberConfig  {
     
     @Autowired

@@ -8,7 +8,7 @@ Feature: Generate cocktail choice based on inventory and settings
   Background: User exists
 
     Given I am signed up for Mixer
-    Given I am logged in to Mixer
+    Given I am logged into my account
 
   Scenario: Cocktail generated with both alcohol and modifier (Success Flow)
 

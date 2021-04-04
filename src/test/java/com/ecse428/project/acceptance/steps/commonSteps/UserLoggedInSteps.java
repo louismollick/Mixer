@@ -43,7 +43,7 @@ public class UserLoggedInSteps extends CucumberConfig {
     context.setUser(userRepository.findByEmail(TestContext.valid_email).get());
   }
 
-  @Given("I am logged in to Mixer")
+  @Given("I am logged into my account")
   public void i_am_logged_in_to_mixer() {
     HttpEntity<User> userRequest = new HttpEntity<>(new User(TestContext.valid_email, TestContext.valid_password));
     ResponseEntity<String> response = restTemplate.exchange("/login", HttpMethod.POST, userRequest, String.class);
