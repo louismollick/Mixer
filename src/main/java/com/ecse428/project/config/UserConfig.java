@@ -12,9 +12,9 @@ public class UserConfig {
     @Bean
     CommandLineRunner userCommandLineRunner(UserService service) {
         return args -> {
-            User john = new User("JohnDoe9@gmail.com", "12345678");
+            User example = new User("user@example.com", "12345678");
 
-            service.postSignup(john); // this also encrypts the password
+            service.postSignup(example); // this also encrypts the password
         };
     }
 }

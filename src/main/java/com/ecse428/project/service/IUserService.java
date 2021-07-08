@@ -113,18 +113,14 @@ public class IUserService implements UserService {
         if (!alcohol.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Alcohol not found with name " + alcoholName + ".");
         }
-
         // Let the user know if it's already in their inventory
         if (user.get().getAlcoholInInventory().contains(alcohol.get())) {
             return ResponseEntity.status(HttpStatus.OK).body("Alcohol already in inventory.");
         }
-
         // Else add alcohol to user's alcoholInInventory
         user.get().getAlcoholInInventory().add(alcohol.get());
-
         // Save user
         userRepository.save(user.get());
-
         return ResponseEntity.status(HttpStatus.OK).body("Successfully added " + alcoholName + ".");
     }
 

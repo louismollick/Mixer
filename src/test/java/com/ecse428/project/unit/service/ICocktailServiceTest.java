@@ -39,7 +39,7 @@ public class ICocktailServiceTest {
     public void setUp() {
         Alcohol vodka = new Alcohol("Vodka");
         Modifier sugarSyrup = new Modifier("Sugar Syrup", Modifier.ModifierType.SYRUP);
-        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
 
         List<Alcohol> alist = new ArrayList<>();
         alist.add(vodka);
@@ -60,7 +60,7 @@ public class ICocktailServiceTest {
 
     @Test
     public void testGetAllCocktails() {
-        Cocktail c0 = new Cocktail("name1", null, null, Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c0 = new Cocktail("name1", null, null, Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
         List<Cocktail> clist = new ArrayList<>();
 
         clist.add(c0);
@@ -82,7 +82,7 @@ public class ICocktailServiceTest {
 
         Alcohol vodka = new Alcohol("Vodka");
         Modifier sugarSyrup = new Modifier("Sugar Syrup", Modifier.ModifierType.SYRUP);
-        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
 
         when(mockCocktailRepository.findByParams(cName, vodka, sugarSyrup, Cocktail.TasteType.BITTER, Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL)).thenReturn(List.of(c1));
 
@@ -102,7 +102,7 @@ public class ICocktailServiceTest {
 
         Alcohol vodka = new Alcohol("Vodka");
         Modifier sugarSyrup = new Modifier("Sugar Syrup", Modifier.ModifierType.SYRUP);
-        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
 
         when(mockCocktailRepository.findByParams(cName, vodka, sugarSyrup, Cocktail.TasteType.BITTER, Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL)).thenReturn(List.of(c1));
 
@@ -127,7 +127,7 @@ public class ICocktailServiceTest {
 
         Alcohol vodka = new Alcohol("Vodka");
         Modifier sugarSyrup = new Modifier("Sugar Syrup", Modifier.ModifierType.SYRUP);
-        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
 
         when(mockCocktailRepository.findByParams(cName, vodka, sugarSyrup, Cocktail.TasteType.BITTER, Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL)).thenReturn(List.of(c1));
 
@@ -152,7 +152,7 @@ public class ICocktailServiceTest {
 
         Alcohol vodka = new Alcohol("Vodka");
         Modifier sugarSyrup = new Modifier("Sugar Syrup", Modifier.ModifierType.SYRUP);
-        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL);
+        Cocktail c1 = new Cocktail("name1", List.of(sugarSyrup), List.of(vodka), Set.of(Cocktail.TasteType.BITTER), Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL, "");
 
         when(mockCocktailRepository.findByParams(cName, vodka, sugarSyrup, Cocktail.TasteType.BITTER, Cocktail.StrengthType.MEDIUM, Cocktail.ServingSize.INDIVIDUAL)).thenReturn(List.of(c1));
 

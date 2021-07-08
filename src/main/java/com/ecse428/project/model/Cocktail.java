@@ -37,6 +37,8 @@ public class Cocktail {
     @ManyToMany
     private List<Alcohol> alcohols;
 
+    private String imgUrl;
+
     public Cocktail() {
     }
 
@@ -56,12 +58,20 @@ public class Cocktail {
         this.name = name;
     }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public void setModifiers(List<Modifier> modifiers) {
         this.modifiers = modifiers;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 
     public List<Alcohol> getAlcohols() {
@@ -112,13 +122,14 @@ public class Cocktail {
     }
 
     public Cocktail(String name, List<Modifier> modifiers, List<Alcohol> alcohols, Set<TasteType> tasteTypes,
-            StrengthType strengthTypes, ServingSize servingSize) {
+            StrengthType strengthTypes, ServingSize servingSize, String imgUrl) {
         this.name = name;
         this.modifiers = modifiers;
         this.alcohols = alcohols;
         this.tasteTypes = tasteTypes;
         this.strengthType = strengthTypes;
         this.servingSize = servingSize;
+        this.imgUrl = imgUrl;
     }
 
     @Override

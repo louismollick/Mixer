@@ -44,7 +44,6 @@ public class ICocktailService implements CocktailService{
     @Override
     public List<Cocktail> getCocktailByParams(String cName, List<String> alcohols, List<String> modifiers, List<String> tasteTypes,
                                               String strengthType, String servingSize) {
-
         final List<Alcohol> a_list = new ArrayList<>();
         final List<Modifier> m_list = new ArrayList<>();
         final List<Cocktail.TasteType> t_list = new ArrayList<>();
@@ -52,7 +51,7 @@ public class ICocktailService implements CocktailService{
         final Cocktail.ServingSize ss_found;
         final String cName_res = cName == null ? new String() : cName;
 
-        if (!alcohols.isEmpty()) {
+        if (alcohols != null && !alcohols.isEmpty()) {
             for (String a : alcohols) {
                 Optional<Alcohol> a_found = alcoholRepository.findByName(getCase(a));
 
@@ -66,7 +65,7 @@ public class ICocktailService implements CocktailService{
             a_list.add(null);
         }
 
-        if (!modifiers.isEmpty()) {
+        if (modifiers != null && !modifiers.isEmpty()) {
             for (String m : modifiers) {
                 Optional<Modifier> m_found = modifierRepository.findByName(getCase(m));
 
@@ -80,7 +79,7 @@ public class ICocktailService implements CocktailService{
             m_list.add(null);
         }
 
-        if (!tasteTypes.isEmpty()) {
+        if (tasteTypes != null && !tasteTypes.isEmpty()) {
             for (String t : tasteTypes) {
                 Cocktail.TasteType t_found;
 
