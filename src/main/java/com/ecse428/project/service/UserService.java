@@ -6,6 +6,7 @@ import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.model.User;
+import com.ecse428.project.util.CocktailWithInventoryResponse;
 
 import org.springframework.http.ResponseEntity;
 
@@ -31,5 +32,7 @@ public interface UserService {
     public ResponseEntity<String> putFavouriteCocktail(long userId, String cocktailName);
 
     public ResponseEntity<String> deleteFavouriteCocktail(long userId, String cocktailName);
+
+    public CocktailWithInventoryResponse getCocktailsWithInventory(long userId);
 
 }

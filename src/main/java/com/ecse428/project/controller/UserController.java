@@ -15,6 +15,7 @@ import com.ecse428.project.model.Alcohol;
 import com.ecse428.project.model.Cocktail;
 import com.ecse428.project.model.Modifier;
 import com.ecse428.project.service.IUserService;
+import com.ecse428.project.util.CocktailWithInventoryResponse;
 
 @RestController
 @RequestMapping(path = "api/user/{userId}")
@@ -49,6 +50,11 @@ public class UserController {
     @GetMapping("favouriteCocktail")
     public Set<Cocktail> getFavouriteCocktails(@PathVariable int userId) {
         return userService.getFavouriteCocktail(userId);
+    }
+
+    @GetMapping("cocktailsWithInventory")
+    public CocktailWithInventoryResponse getCocktailsWithInventory(@PathVariable int userId) {
+        return userService.getCocktailsWithInventory(userId);
     }
 
     @PutMapping("favouriteCocktail/{cocktailName}")

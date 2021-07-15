@@ -10,26 +10,6 @@ import Header from './components/Header';
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(true);
 
-  // Search options
-  const [alcohols, setAlcohols] = useState(null);
-  const [modifiers, setModifiers] = useState(null);
-  const [tasteTypes, setTasteTypes] = useState([]);
-  const [strengthType, setStrengthType] = useState("WEAK");
-  const [servingSize, setServingSize] = useState("INDIVIDUAL");
-
-  const searchOptions = {
-    alcohols,
-    setAlcohols,
-    modifiers,
-    setModifiers,
-    tasteTypes,
-    setTasteTypes,
-    strengthType,
-    setStrengthType,
-    servingSize,
-    setServingSize
-  };
-  
   const sections = [
     { title: 'Home', url: '/' },
     { title: 'Login', url: '/login' },
@@ -44,8 +24,8 @@ const App = () => {
     <div className="App">
       <Header title="Mixer" sections={sections} loggedIn={loggedIn} />
       <Switch>
-        <Route exact path="/"><Home loggedIn={loggedIn} searchOptions={searchOptions} /></Route>
-        <Route path="/search"><Search searchOptions={searchOptions} /></Route>
+        <Route exact path="/"><Home loggedIn={loggedIn} /></Route>
+        <Route path="/search"><Search loggedIn={loggedIn} /></Route>
         <Route path="/login"><Login setLoggedIn={setLoggedIn} /></Route>
         <Route path="/signup"><Signup /></Route>
         <Route path="/profile"><Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} /></Route>

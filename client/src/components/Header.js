@@ -1,17 +1,18 @@
-import { useLocation } from 'react-router-dom';
+
+import { useLocation, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import { withRouter } from 'react-router-dom';
+
+import LocalBarIcon from '@material-ui/icons/LocalBar';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbarTitle: {
-    flex: 1,
+    justifyContent: 'center'
   },
   toolbarSecondary: {
     justifyContent: 'space-around',
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     flexShrink: 0,
   },
+  icon: {
+    marginRight: '0.2em'
+  }
 }));
 
 const notLoggedInPaths = ['/login', '/signup'];
@@ -34,16 +38,19 @@ const Header = ({ sections, title, loggedIn }) => {
   return (isVisible &&
     <>
       <Toolbar className={classes.toolbar}>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
+        <Box display="flex" alignItems="center">
+          <LocalBarIcon fontSize="large" className={classes.icon}/>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            {title}
+          </Typography>
+        </Box>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections

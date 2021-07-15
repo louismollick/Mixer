@@ -1,5 +1,8 @@
 package com.ecse428.project.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,6 +14,8 @@ import com.ecse428.project.repository.AlcoholRepository;
 import com.ecse428.project.repository.CocktailRepository;
 import com.ecse428.project.repository.ModifierRepository;
 import com.ecse428.project.repository.UserRepository;
+import com.ecse428.project.util.CocktailWithInventoryResponse;
+import com.ecse428.project.util.MissingIngredientCocktail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -263,4 +268,34 @@ public class IUserService implements UserService {
         return ResponseEntity.status(HttpStatus.OK).body("Successfully removed " + cocktailName + ".");
     }
 
+    @Override
+    public CocktailWithInventoryResponse getCocktailsWithInventory(long userId) {
+        // Find user in database
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId + ".");
+        }
+
+        Set<Alcohol> invAlcohols = user.get().getAlcoholInInventory();
+        Set<Modifier> invModifiers = user.get().getModifiersInInventory();
+        List<Cocktail> cocktails = cocktailRepository.findAll();
+
+        CocktailWithInventoryResponse res = new CocktailWithInventoryResponse();
+        for (Cocktail cocktail : cocktails) {
+            // Get all alcohols/modifiers needed & subtract the ones the user already has in inventory
+            var missingAlcohols = new HashSet<Alcohol>(cocktail.getAlcohols());
+            missingAlcohols.removeAll(invAlcohols); 
+            var missingModifiers = new HashSet<Modifier>(cocktail.getModifiers());
+            missingModifiers.removeAll(invModifiers);
+
+            if (missingAlcohols.isEmpty() && missingModifiers.isEmpty()){
+                res.getCocktailsYouCanMake().add(cocktail);
+            } else {
+                var missingIngredients = new MissingIngredientCocktail(cocktail, missingAlcohols, missingModifiers);
+                res.getCocktailsMissingIngredients().add(missingIngredients);
+            }
+        }
+
+        return res;
+    }
 }
