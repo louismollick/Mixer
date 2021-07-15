@@ -1,11 +1,11 @@
 
-import { useLocation, withRouter } from 'react-router-dom';
+import { useLocation, withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
+import NavLink from '@material-ui/core/Link';
 
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 
@@ -56,16 +56,17 @@ const Header = ({ sections, title, loggedIn }) => {
         {sections
           .filter(section => loggedIn ? !notLoggedInPaths.includes(section.url) : !loggedInPaths.includes(section.url))
           .map((section) => (
-            <Link
+            <NavLink
               color="inherit"
               noWrap
               key={section.title}
               variant="body2"
-              href={section.url}
+              to={section.url}
               className={classes.toolbarLink}
+              component={Link}
             >
               {section.title}
-            </Link>
+            </NavLink>
           ))}
       </Toolbar>
     </>

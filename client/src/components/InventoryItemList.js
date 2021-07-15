@@ -99,6 +99,7 @@ const InventoryItemList = ({ itemType }) => {
       const userId = window.localStorage.getItem('userId');
       const token = window.localStorage.getItem('token');
       const cancelToken = source.token;
+      if (!userId || !token) return;
       Promise.all(requestInventory(userId, token, cancelToken))
         .then(data => setLoading(false))
     } catch (err) {
