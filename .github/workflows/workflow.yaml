@@ -19,6 +19,8 @@ jobs:
 
       - name: Install and build
         run: cd client && npm install && npm run build
+        env:
+          REACT_APP_BACKEND_URL: https://mixer8.herokuapp.com
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
