@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/Mixer/static/js/main.a3db68b1.chunk.js",
-    "main.js.map": "/Mixer/static/js/main.a3db68b1.chunk.js.map",
+    "main.js": "/Mixer/static/js/main.bf1e62d1.chunk.js",
+    "main.js.map": "/Mixer/static/js/main.bf1e62d1.chunk.js.map",
     "runtime-main.js": "/Mixer/static/js/runtime-main.5b095064.js",
     "runtime-main.js.map": "/Mixer/static/js/runtime-main.5b095064.js.map",
     "static/js/2.695c946e.chunk.js": "/Mixer/static/js/2.695c946e.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.5b095064.js",
     "static/js/2.695c946e.chunk.js",
-    "static/js/main.a3db68b1.chunk.js"
+    "static/js/main.bf1e62d1.chunk.js"
   ]
 }
